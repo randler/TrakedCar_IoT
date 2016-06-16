@@ -4,3 +4,7 @@
 127.0.0.1 - - [16/Jun/2016:00:09:21 -0300] "GET /webservice/v1/sw/id HTTP/1.1" 404 1032
 127.0.0.1 - - [16/Jun/2016:00:09:26 -0300] "GET /webservice/v1//id HTTP/1.1" 404 1028
 127.0.0.1 - - [16/Jun/2016:00:09:29 -0300] "GET /webservice/v1/id HTTP/1.1" 404 1026
+127.0.0.1 - - [16/Jun/2016:00:13:02 -0300] "GET /webservice/v1/servico/id HTTP/1.1" 404 1042
+127.0.0.1 - - [16/Jun/2016:00:13:23 -0300] "GET /webservice/WEB-INF/classes/br/edu/ifba/embarcados/webcoisas/Servico.java HTTP/1.1" 404 992
+127.0.0.1 - - [16/Jun/2016:00:13:23 -0300] "GET /favicon.ico HTTP/1.1" 404 1016
+127.0.0.1 - - [16/Jun/2016:00:13:23 -0300] "GET /favicon.ico HTTP/1.1" 404 1016
