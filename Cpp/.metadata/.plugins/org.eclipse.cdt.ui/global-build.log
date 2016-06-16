@@ -1,0 +1,20 @@
+23:43:29 **** Incremental Build of configuration Release for project daemon ****
+make all 
+Building file: ../src/Comunicacao.cpp
+Invoking: GCC C++ Compiler
+g++ -I"/home/ramonmaciel/MEGA/MEGAsyncUploads/IFBA/iot/TrakedCar_IoT/Cpp/daemon/include" -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/Comunicacao.d" -MT"src/Comunicacao.d" -o "src/Comunicacao.o" "../src/Comunicacao.cpp"
+../src/Comunicacao.cpp:62:15: warning: extra tokens at end of #ifdef directive
+ #ifdef _WIN32 || _WIN64
+               ^
+Finished building: ../src/Comunicacao.cpp
+ 
+Building file: ../src/daemon.cpp
+Invoking: GCC C++ Compiler
+g++ -I"/home/ramonmaciel/MEGA/MEGAsyncUploads/IFBA/iot/TrakedCar_IoT/Cpp/daemon/include" -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/daemon.d" -MT"src/daemon.d" -o "src/daemon.o" "../src/daemon.cpp"
+Finished building: ../src/daemon.cpp
+ 
+Building target: daemon
+Invoking: GCC C++ Linker
+g++  -o "daemon"  ./src/Comunicacao.o ./src/daemon.o   
+Finished building target: daemon
+ 
