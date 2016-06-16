@@ -7,8 +7,8 @@
 #define RST_PIN 9
 
 //diretivas de compilação -> escolhe qual sera usada DEMON/MIDDLEWARE
-//#define MIDDLEWARE
-#define DAEMON
+#define MIDDLEWARE
+//#define DAEMON
 
 // Definicoes pino modulo RC522
 MFRC522 mfrc522(SS_PIN, RST_PIN); 
@@ -53,8 +53,16 @@ void loop()
   
   long info = 0;
   info = lerSensores();
-            
+
+#ifdef MIDDLEWARE
+  infoRF.rfid = info;
+#endif
+
+#ifdef DAEMON
   infoRF = info;
+#endif
+            
+  
      
   enviarParaUSB();
   delay(200);
