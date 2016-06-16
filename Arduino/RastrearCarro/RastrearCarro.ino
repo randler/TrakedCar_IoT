@@ -1,4 +1,4 @@
-#include <Wire.h>
+ #include <Wire.h>
 #include <SPI.h>
 #include <MFRC522.h>
 
@@ -7,8 +7,8 @@
 #define RST_PIN 9
 
 //diretivas de compilação -> escolhe qual sera usada DEMON/MIDDLEWARE
-#define MIDDLEWARE
-//#define DAEMON
+//#define MIDDLEWARE
+#define DAEMON
 
 // Definicoes pino modulo RC522
 MFRC522 mfrc522(SS_PIN, RST_PIN); 
