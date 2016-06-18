@@ -1,3 +1,0 @@
-INDEX VERSION 1.3+C:\Users\randler\Documents\Projeto_IoT\TrakedCar_IoT\WebService\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-1614010935.index
-1416556072.index
