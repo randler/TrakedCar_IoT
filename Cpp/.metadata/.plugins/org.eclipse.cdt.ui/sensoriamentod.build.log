@@ -1,0 +1,27 @@
+16:54:07 **** Build of configuration Debug for project sensoriamentod ****
+make all 
+Building file: ../src/comunicacao.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/comunicacao.d" -MT"src/comunicacao.d" -o "src/comunicacao.o" "../src/comunicacao.cpp"
+../src/comunicacao.cpp:62:15: warning: extra tokens at end of #ifdef directive
+ #ifdef _WIN32 || _WIN64
+               ^
+Finished building: ../src/comunicacao.cpp
+ 
+Building file: ../src/daemon.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/daemon.d" -MT"src/daemon.d" -o "src/daemon.o" "../src/daemon.cpp"
+../src/daemon.cpp: In function ‘int main(int, char**)’:
+../src/daemon.cpp:184:26: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+   com = Comunicacao(PORTA);
+                          ^
+Finished building: ../src/daemon.cpp
+ 
+Building target: sensoriamentod
+Invoking: GCC C++ Linker
+g++  -o "sensoriamentod"  ./src/comunicacao.o ./src/daemon.o   
+Finished building target: sensoriamentod
+ 
+
+16:54:09 Build Finished (took 1s.668ms)
+

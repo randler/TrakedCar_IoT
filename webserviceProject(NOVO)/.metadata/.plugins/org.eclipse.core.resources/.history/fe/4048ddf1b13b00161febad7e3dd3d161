@@ -1,0 +1,47 @@
+package br.edu.ifba.embarcados.webcoisas.factoryBD.comandos;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import br.edu.ifba.embarcados.clientewebcoisas.bean.Carro;
+import br.edu.ifba.embarcados.clientewebcoisas.bean.Usuario;
+
+import com.mysql.cj.jdbc.PreparedStatement;
+
+public class Alterar {
+
+	private static Alterar alterar = null;
+	
+	private Alterar(){
+		
+	}
+	
+	public static Alterar getInstancia(){
+		if(alterar == null){
+			alterar= new Alterar();
+		}		
+		return alterar;		
+	}
+	
+	
+	public void alterarStatus(Usuario usuario, Carro carro, Connection con){
+		String sql = "update Carro set statusCarro=? "+"where idCarro=?";
+		
+        try {
+    		PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
+
+        	stmt.setBoolean(1,true);
+			stmt.setInt(2, carro.getId());
+			stmt.execute();
+			stmt.close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	
+}

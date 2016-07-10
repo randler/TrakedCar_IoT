@@ -1,16 +1,2 @@
-INDEX VERSION 1.127 OT2+C:\Users\randler\Desktop\embarcados-master\web_sEringas\webserviceProject\.metadata\.plugins\org.eclipse.jdt.core
-14563271.index
-1852528202.index
-3147280435.index
-753990572.index
-4024462165.index
-2243056783.index
-4053801807.index
-2633750040.index
-2938199754.index
-2352441926.index
-801276723.index
-2943243065.index
-1618086738.index
-611782300.index
-634284578.index
+INDEX VERSION 1.127+/home/randler/DESENVOLVIMENTO/IotGit/TrakedCar_IoT/webserviceProject(NOVO)/.metadata/.plugins/org.eclipse.jdt.core
+2102256812.index

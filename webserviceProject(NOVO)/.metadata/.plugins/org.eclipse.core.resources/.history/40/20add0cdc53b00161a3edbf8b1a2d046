@@ -1,0 +1,31 @@
+package br.edu.ifba.embarcados.webcoisas.dao;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import br.edu.ifba.embarcados.webcoisas.bean.Carro;
+import br.edu.ifba.embarcados.webcoisas.bean.Usuario;
+
+import com.mysql.cj.jdbc.PreparedStatement;
+
+public class Alterar {
+
+	private static Alterar alterar = null;
+	
+	private Alterar(){
+		
+	}
+	
+	public static Alterar getInstancia(){
+		if(alterar == null){
+			alterar= new Alterar();
+		}		
+		return alterar;		
+	}
+	
+	
+
+	
+	
+	
+}

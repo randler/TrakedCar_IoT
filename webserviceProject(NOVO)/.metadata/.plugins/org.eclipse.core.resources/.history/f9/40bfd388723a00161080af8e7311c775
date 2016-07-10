@@ -1,0 +1,13 @@
+package br.edu.ifba.embarcados.clientewebcoisas.bean;
+
+
+public class Carro {
+
+	private String nome;
+	private boolean status;
+	private String marca;
+	private int ano;
+	private Usuario usuarioCarro;
+	
+	
+}

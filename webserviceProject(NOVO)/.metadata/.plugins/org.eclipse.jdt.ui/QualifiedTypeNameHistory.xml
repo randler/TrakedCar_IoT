@@ -1,2 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java.lang.RuntimeException"/>
+<fullyQualifiedTypeName name="br.edu.ifba.embarcados.clientewebcoisas.factory.ConnectionFactory"/>
+<fullyQualifiedTypeName name="java.lang.ClassNotFoundException"/>
+<fullyQualifiedTypeName name="java.sql.Date"/>
+<fullyQualifiedTypeName name="br.edu.ifba.embarcados.clientewebcoisas.factory.comandos.Adicionar"/>
+<fullyQualifiedTypeName name="br.edu.ifba.embarcados.clientewebcoisas.conector.Conector"/>
+<fullyQualifiedTypeName name="java.sql.ResultSet"/>
+<fullyQualifiedTypeName name="br.edu.ifba.embarcados.clientewebcoisas.bean.Carro"/>
+<fullyQualifiedTypeName name="br.edu.ifba.embarcados.clientewebcoisas.bean.Usuario"/>
+<fullyQualifiedTypeName name="br.edu.ifba.embarcados.clientewebcoisas.factory.comandos.Consultar"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="com.mysql.cj.jdbc.PreparedStatement"/>
+<fullyQualifiedTypeName name="java.security.Timestamp"/>
+<fullyQualifiedTypeName name="java.sql.Timestamp"/>
+<fullyQualifiedTypeName name="java.lang.UnknownError"/>
+<fullyQualifiedTypeName name="java.lang.Runnable"/>
+<fullyQualifiedTypeName name="com.github.sarxos.webcam.WebcamListener"/>
+<fullyQualifiedTypeName name="com.github.sarxos.webcam.WebcamResolution"/>
+<fullyQualifiedTypeName name="com.github.sarxos.webcam.WebcamPanel"/>
+<fullyQualifiedTypeName name="java.awt.BorderLayout"/>
+<fullyQualifiedTypeName name="javax.swing.JFrame"/>
+<fullyQualifiedTypeName name="br.edu.ifba.embarcados.clientewebcoisas.webcam.MyWebcam"/>
+<fullyQualifiedTypeName name="br.edu.ifba.embarcados.clientewebcoisas.bean.Senha"/>
+<fullyQualifiedTypeName name="br.edu.ifba.embarcados.clientewebcoisas.email.SendEmail"/>
+<fullyQualifiedTypeName name="java.util.Calendar"/>
+<fullyQualifiedTypeName name="com.sun.mail.handlers.image_gif"/>
+<fullyQualifiedTypeName name="br.edu.ifba.embarcados.webcoisas.bean.Usuario"/>
+<fullyQualifiedTypeName name="br.edu.ifba.embarcados.webcoisas.dao.UsuarioDAO"/>
+<fullyQualifiedTypeName name="br.edu.ifba.embarcados.webcoisas.dao.CarroDAO"/>
+<fullyQualifiedTypeName name="javax.ws.rs.POST"/>
+<fullyQualifiedTypeName name="javax.ws.rs.PathParam"/>
+<fullyQualifiedTypeName name="javax.ws.rs.Consumes"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="com.google.gson.Gson"/>
+<fullyQualifiedTypeName name="javax.ws.rs.core.Response"/>
+<fullyQualifiedTypeName name="java.sql.DriverManager"/>
+<fullyQualifiedTypeName name="java.sql.Connection"/>
+<fullyQualifiedTypeName name="javax.ws.rs.core.Response.Status"/>
+<fullyQualifiedTypeName name="javax.ws.rs.PUT"/>
+<fullyQualifiedTypeName name="java.net.MalformedURLException"/>
+<fullyQualifiedTypeName name="javax.ws.rs.Produces"/>
+</qualifiedTypeNameHistroy>

@@ -1,0 +1,123 @@
+package br.edu.ifba.embarcados.webcoisas;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+
+import com.google.gson.Gson;
+
+import br.edu.ifba.embarcados.webcoisas.bean.Carro;
+import br.edu.ifba.embarcados.webcoisas.bean.Usuario;
+import br.edu.ifba.embarcados.webcoisas.dao.CarroDAO;
+import br.edu.ifba.embarcados.webcoisas.dao.UsuarioDAO;
+import br.edu.ifba.embarcados.webcoisas.factory.ConnectionFactory;
+import br.edu.ifba.embarcados.webcoisas.sensoriamento.LeitorSensoriamento;
+
+@Path("servico")
+public class Servico {
+
+	private static UsuarioDAO usuarioDAO = UsuarioDAO.getInstancia(); 
+	private static CarroDAO carroDAO = CarroDAO.getInstancia();
+	
+	private static Connection con = new ConnectionFactory().getConnection();
+	
+	
+	@GET
+	@Path("/id/")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getId() {
+		return LeitorSensoriamento.getRFID() + "";
+	}
+
+	
+	@GET
+	@Path("/sensores")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getSensores() {
+		return LeitorSensoriamento.getSensores() + "";
+	}
+	
+	 @GET
+	 @Path("/consultar{id}")
+	 @Produces("application/json")
+	 public String pesquisarCarro(@PathParam("id") int id) {
+		return new Gson().toJson(carroDAO.concultarCarro(con));		 
+	 }
+
+	 @PUT
+     public Response createUser(Usuario user) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		 
+		 usuarioDAO.adicionarUsuario(user, con);
+         con.close();
+           return Response.status(Status.OK).build();
+     }
+	
+	
+	// ----------------------------------- Adicionar ---------------------------
+	public void addUser(String name){
+		
+		try {
+			Usuario usuario = new Usuario(gerarId(),name);	
+			
+			usuarioDAO.adicionarUsuario(usuario, con);
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	public void addCar(int id, String nome, String marca, String ano, Usuario usuario){
+		
+		try {
+			Carro carro = new Carro(id, nome, marca, ano, usuario.getId());
+			
+			carroDAO.adicionarCarro(usuario.getId(), carro, con);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	//----------------------------------------------- Consultar -------------------------
+	
+	public static boolean consultaCarro(int id){
+		boolean saida = false;
+		List<Carro> carros = new ArrayList<Carro>();
+		carros = CarroDAO.concultarCarro(con);
+				
+		for (Carro carro : carros) {
+			if((carro.getId() == id) && (carro.isStatus())){
+				saida = true;
+			}		
+		}
+		return saida;
+	}
+	
+	
+	//--------------------------------------- Gerar ID ---------------------------------
+	
+	public static int gerarId(){
+		int id = 0;
+		Timestamp dataDeHoje = new Timestamp(System.currentTimeMillis());
+		id = (int) dataDeHoje.getTime();
+		return id*(-1);
+	}
+	
+}

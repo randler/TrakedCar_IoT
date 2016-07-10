@@ -1,0 +1,43 @@
+package br.edu.ifba.embarcados.webcoisas;
+
+import java.sql.Connection;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+import br.edu.ifba.embarcados.webcoisas.factoryBD.ConnectionFactory;
+import br.edu.ifba.embarcados.webcoisas.factoryBD.comandos.Adicionar;
+import br.edu.ifba.embarcados.webcoisas.factoryBD.comandos.Alterar;
+import br.edu.ifba.embarcados.webcoisas.factoryBD.comandos.Consultar;
+import br.edu.ifba.embarcados.webcoisas.factoryBD.comandos.Remover;
+import br.edu.ifba.embarcados.webcoisas.sensoriamento.LeitorSensoriamento;
+
+@Path("servico")
+public class Servico {
+	private static Adicionar adicionar 	= Adicionar.getInstancia();
+	private static Consultar consultar 	= Consultar.getInstancia();	
+	private static Remover remover 		= Remover.getInstancia();
+	private static Alterar alterar 		= Alterar.getInstancia();
+
+
+	private static Connection con = new ConnectionFactory().getConnection();
+	
+	@GET
+	@Path("/id/")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getId() {
+		return LeitorSensoriamento.getRFID() + "";
+	}
+
+	
+	@GET
+	@Path("/sensores")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getSensores() {
+		return LeitorSensoriamento.getSensores() + "";
+	}
+
+	
+}

@@ -1,0 +1,18 @@
+package br.edu.ifba.embarcados.webcoisas.factoryBD.comandos;
+
+public class Remover {
+
+	private static Remover remover= null;
+	
+	private Remover(){
+		
+	}
+	
+	public static Remover getInstancia(){
+		if(remover == null){
+			remover = new Remover();
+		}		
+		return remover;		
+	}
+	
+}

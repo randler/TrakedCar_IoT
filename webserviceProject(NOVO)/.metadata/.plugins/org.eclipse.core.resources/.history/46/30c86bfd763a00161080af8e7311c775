@@ -1,0 +1,46 @@
+package br.edu.ifba.embarcados.clientewebcoisas;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import org.apache.http.ConnectionClosedException;
+
+import br.edu.ifba.embarcados.clientewebcoisas.bean.Carro;
+import br.edu.ifba.embarcados.clientewebcoisas.bean.Usuario;
+import br.edu.ifba.embarcados.clientewebcoisas.factory.ConnectionFactory;
+import br.edu.ifba.embarcados.clientewebcoisas.factory.comandos.Adicionar;
+
+public class Executor {
+
+	private static Adicionar adicionar = null;
+	
+	public static void main(String[] args) throws InterruptedException, ConnectionClosedException {
+		//Conector conector = new Conector();
+
+		try {
+		Connection con = new ConnectionFactory().getConnection();
+		adicionar.getInstancia();
+		
+		Usuario usuario = new Usuario(1,"Joao");
+		Carro carro = new Carro(1, "fusca","VW", "1986",usuario);
+		
+		adicionar.adicionarUsuario(usuario, con);
+		adicionar.adicionarCarro(usuario, carro, con);
+		
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//		while (true) {
+//			Integer id = conector.getId();
+//			System.out.println("Sensores...");
+//			System.out.println("id = " + id);			
+//			System.out.println("Final de leitura!");
+//			System.out.println("...");
+//			
+//			
+//			Thread.sleep(1000);
+//		}
+	}
+}

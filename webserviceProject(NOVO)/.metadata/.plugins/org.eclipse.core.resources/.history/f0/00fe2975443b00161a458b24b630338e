@@ -1,0 +1,25 @@
+package br.edu.ifba.embarcados.clientewebcoisas.webcam;
+
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamPanel;
+import com.github.sarxos.webcam.WebcamPicker;
+
+public class MyWebcam {
+	
+    private WebcamPicker seletor = null;
+    private Webcam webcam = null;
+    private WebcamPanel painel = null;
+    private MyWebcam minhaWeb = null;
+	
+    private MyWebcam(){
+        
+    }
+    
+    public MyWebcam getInstanciaMinhaWebcam(){
+        if(minhaWeb == null){
+            this.minhaWeb = new MyWebcam();
+        }
+        return minhaWeb;
+    }
+
+}

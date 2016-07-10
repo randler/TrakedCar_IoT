@@ -1,0 +1,153 @@
+package br.edu.ifba.embarcados.clientewebcoisas.webcam;
+
+import java.awt.Image;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.SwingUtilities;
+
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamDiscoveryEvent;
+import com.github.sarxos.webcam.WebcamDiscoveryListener;
+import com.github.sarxos.webcam.WebcamEvent;
+import com.github.sarxos.webcam.WebcamListener;
+import com.github.sarxos.webcam.WebcamPanel;
+import com.github.sarxos.webcam.WebcamPicker;
+
+public class MyWebcam extends javax.swing.JFrame implements Runnable,Thread.UncaughtExceptionHandler, WindowListener, WebcamListener, ItemListener, WebcamDiscoveryListener {
+	
+    private WebcamPicker seletor = null;
+    private Webcam webcam = null;
+    private WebcamPanel painel = null;
+    private MyWebcam minhaWeb = null;
+	
+    private MyWebcam(){
+        
+    }
+    
+    public MyWebcam getInstanciaMinhaWebcam(){
+        if(minhaWeb == null){
+            this.minhaWeb = new MyWebcam();
+        }
+        return minhaWeb;
+    }
+    
+    public void executarWebcam() {
+        SwingUtilities.invokeLater(new MyWebcam().getInstanciaMinhaWebcam());
+       }
+    
+    public Image tirarFoto(){
+    	 Image imagem = webcam.getImage();
+         ImageIcon img = new ImageIcon(imagem);
+//         jLabel1.setIcon(img);
+//         jLabel1.setSize(imagem.getWidth(painel), imagem.getHeight(painel));
+    
+         return imagem
+    }
+    
+    
+
+	@Override
+	public void webcamFound(WebcamDiscoveryEvent arg0) {
+		if(null != seletor){
+			seletor.addItem(arg0.getWebcam());
+		}
+
+	}
+
+	@Override
+	public void webcamGone(WebcamDiscoveryEvent arg0) {
+		if(null == seletor){
+			seletor.removeItem(arg0.getWebcam());
+		}
+		
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void webcamClosed(WebcamEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void webcamDisposed(WebcamEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void webcamImageObtained(WebcamEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void webcamOpen(WebcamEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void uncaughtException(Thread t, Throwable e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

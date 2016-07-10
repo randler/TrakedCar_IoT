@@ -1,2 +1,3 @@
+browsers=<?xml version\="1.0" encoding\="UTF-8"?>\n<web-browsers current\="0">\n<system/>\n<external location\="/usr/bin/firefox" name\="Firefox"/>\n</web-browsers>
 eclipse.preferences.version=1
 internalWebBrowserHistory=http\://localhost\:8080/vacina/monitor.vac|*|http\://localhost\:8080/vacina/v1/web/monitor.vac|*|http\://localhost\:8080/vacina/monitor.xhtml|*|http\://localhost\:8080/vacina/web|*|http\://localhost\:8080/vacina/web/monitor.vac|*|http\://localhost\:8080/vacina/|*|http\://localhost\:8080/webcoisas/servico/sensores|*|http\://localhost\:8080/webcoisas/servico|*|http\://localhost\:8080/webcoisas/|*|

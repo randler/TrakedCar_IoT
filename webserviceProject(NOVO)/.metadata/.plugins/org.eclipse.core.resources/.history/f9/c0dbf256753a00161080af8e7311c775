@@ -1,0 +1,39 @@
+package br.edu.ifba.embarcados.clientewebcoisas.factory.comandos;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import br.edu.ifba.embarcados.clientewebcoisas.bean.Carro;
+import br.edu.ifba.embarcados.clientewebcoisas.bean.Usuario;
+
+import com.mysql.cj.jdbc.PreparedStatement;
+
+public class Adicionar {
+
+	
+	
+	public void AdicionarCarro(Usuario usuario, Carro carro, Connection con) throws SQLException{
+		 // cria um preparedStatement
+        String sql = "insert into Carro" +
+                " (idCarro,nomeCarro,statusCarro, marcaCarro, anoCarro,Usuario_idUsuario)" +
+                " values (?,?,?,?,?,?)";
+        PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
+        
+        
+        // preenche os valores
+        stmt.setInt(1, 1);
+        stmt.setString(2, "Vectra");
+        stmt.setBoolean(3, false);
+        stmt.setString(4, "Chevrolet");
+        stmt.setString(5,"1998");
+        stmt.setInt(6,usuario.getId());
+
+        // executa
+        stmt.execute();
+        stmt.close();
+
+        System.out.println("Gravado!");
+		
+	}
+	
+}

@@ -1,0 +1,61 @@
+package br.edu.ifba.embarcados.webcoisas.dao;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import br.edu.ifba.embarcados.webcoisas.bean.Carro;
+import br.edu.ifba.embarcados.webcoisas.bean.Usuario;
+
+import com.mysql.cj.jdbc.PreparedStatement;
+
+public class Consultar {
+	private List<Carro> carros = new ArrayList<Carro>();
+	private List<Usuario> usuario = new ArrayList<Usuario>();
+	
+	private static Consultar consultar = null;
+	
+	private Consultar(){
+		
+	}
+	
+	public static Consultar getInstancia(){
+		if(consultar == null){
+			consultar = new Consultar();
+		}		
+		return consultar;		
+	}
+	
+	
+	public List<Carro> concultarCarro(Connection con){
+		try {
+			PreparedStatement stmt = (PreparedStatement) con.prepareStatement("select * from Carro");
+		
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()){
+				Carro carro = new Carro();
+				
+				carro.setId(rs.getInt("idCarro"));
+				carro.setNome(rs.getString("nomeCarro"));
+				carro.setStatus(rs.getBoolean("statusCarro"));
+				carro.setMarca(rs.getString("marcaCarro"));
+				carro.setAno(rs.getString("anoCarro"));
+				carro.setUsuarioCarro(rs.getInt("Usuario_idUsuario"));
+				
+				carros.add(carro);				
+				
+			}
+			
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return carros;
+	}
+
+}

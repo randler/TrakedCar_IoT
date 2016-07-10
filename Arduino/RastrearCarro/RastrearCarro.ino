@@ -1,4 +1,4 @@
- #include <Wire.h>
+#include <Wire.h>
 #include <SPI.h>
 #include <MFRC522.h>
 
@@ -65,7 +65,7 @@ void loop()
   
      
   enviarParaUSB();
-  delay(200);
+  delay(1000);
 }
 
 

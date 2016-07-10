@@ -1,0 +1,25 @@
+package br.edu.ifba.embarcados.webcoisas.BD;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class ConnectionFactory {
+	private String timeZone_SSL = "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false";
+	private String url = "jdbc:mysql://localhost:3306/TrackedCar"+ timeZone_SSL; //Nome da base de dados
+	private String user = "root"; //nome do usuário do MySQL
+	private String password = "123456"; //senha do MySQL
+	
+	
+	public Connection getConnection(){
+		try {
+			
+			return DriverManager.getConnection(url,user,password);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	
+
+}

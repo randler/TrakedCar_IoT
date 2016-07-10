@@ -8,15 +8,20 @@
 	</classpathentry>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jsf"/>
-	<classpathentry kind="lib" path="C:/Users/randler/Documents/Projeto_IoT/Libs/javax.faces-api-2.2-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/randler/Documents/Projeto_IoT/Libs/jna.jar"/>
-	<classpathentry kind="lib" path="C:/Users/randler/Documents/Projeto_IoT/Libs/platform.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Jersey">
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v8.0"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JDBC">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v8.0"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Json"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gson">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jersey"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Jna"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Jsf"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

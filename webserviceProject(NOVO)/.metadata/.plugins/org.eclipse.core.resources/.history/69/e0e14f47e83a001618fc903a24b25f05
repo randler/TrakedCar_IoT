@@ -1,0 +1,90 @@
+package br.edu.ifba.embarcados.clientewebcoisas;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.ConnectionClosedException;
+
+import br.edu.ifba.embarcados.clientewebcoisas.bean.Carro;
+import br.edu.ifba.embarcados.clientewebcoisas.bean.Usuario;
+import br.edu.ifba.embarcados.clientewebcoisas.conector.Conector;
+import br.edu.ifba.embarcados.clientewebcoisas.factory.ConnectionFactory;
+import br.edu.ifba.embarcados.clientewebcoisas.factory.comandos.Adicionar;
+import br.edu.ifba.embarcados.clientewebcoisas.factory.comandos.Alterar;
+import br.edu.ifba.embarcados.clientewebcoisas.factory.comandos.Consultar;
+import br.edu.ifba.embarcados.clientewebcoisas.factory.comandos.Remover;
+
+public class Executor {
+
+	private static Adicionar adicionar 	= Adicionar.getInstancia();
+	private static Consultar consultar 	= Consultar.getInstancia();	
+	private static Remover remover 		= Remover.getInstancia();
+	private static Alterar alterar 		= Alterar.getInstancia();
+
+		
+	private static Connection con = new ConnectionFactory().getConnection();
+	
+	public static void main(String[] args) throws InterruptedException, ConnectionClosedException {
+		Conector conector = new Conector();
+
+		System.out.println(gerarId());
+//		while (true) {
+//				Integer id = conector.getId();
+//				if(id != -1)
+//					consultaCarro(id);
+//				
+//				System.out.println("id = " + id);						
+//				Thread.sleep(200);
+//		}
+	}
+	
+	public void alterarCarro(Usuario user, Carro carro){
+		
+	}
+	
+	public static int gerarId(){
+		int id = 0;
+		Timestamp dataDeHoje = new Timestamp(System.currentTimeMillis());
+		id = (int) dataDeHoje.getTime();
+		return id*(-1);
+	}
+	
+	public void addUser(String name){
+			
+		try {
+			Usuario usuario = new Usuario(gerarId(),name);	
+			
+			adicionar.adicionarUsuario(usuario, con);
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void addCar(Carro carro, Usuario usuario){
+		
+		try {			
+			adicionar.adicionarCarro(usuario.getId(), carro, con);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void consultaCarro(int id){
+		List<Carro> carros = new ArrayList<Carro>();
+		carros = consultar.concultarCarro(con);
+		for (Carro carro : carros) {
+			if((carro.getId() == id) && (carro.isStatus())){
+				System.out.println("Tem, Tira a foto!");
+			}		
+		}
+	}
+}

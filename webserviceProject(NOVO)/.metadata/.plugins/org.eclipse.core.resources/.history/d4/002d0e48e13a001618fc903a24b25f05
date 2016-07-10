@@ -1,0 +1,20 @@
+package br.edu.ifba.embarcados.clientewebcoisas.factory.comandos;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import com.mysql.cj.jdbc.PreparedStatement;
+
+public class Consultar {
+	
+	
+	public void concultarCarro(Connection con){
+		try {
+			PreparedStatement stmt = (PreparedStatement) con.prepareStatement("select * from Carro");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}

@@ -1,0 +1,5 @@
+package br.edu.ifba.embarcados.clientewebcoisas.factory.comandos;
+
+public class Alterar {
+
+}

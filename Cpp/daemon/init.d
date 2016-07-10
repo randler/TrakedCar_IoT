@@ -2,7 +2,7 @@
 #
 # Daemon Name: sensoriamentod
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
-DPATH=/home/ramonmaciel/MEGA/MEGAsyncUploads/IFBA/iot/TrakedCar_IoT/Cpp/daemon/Release
+DPATH=/home/randler/DESENVOLVIMENTO/IotGit/TrakedCar_IoT/Cpp/daemon/Release
 DESC="Daemon de leitura dos sensores"
 NAME=daemon
 DAEMON=$DPATH/$NAME

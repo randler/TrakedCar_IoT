@@ -1,0 +1,5 @@
+package br.edu.ifba.embarcados.webcoisas.dao;
+
+public class UsuarioDAO {
+
+}

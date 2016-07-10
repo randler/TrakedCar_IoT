@@ -1,8 +1,8 @@
-23:43:29 **** Incremental Build of configuration Release for project daemon ****
+00:22:09 **** Build of configuration Release for project daemon ****
 make all 
 Building file: ../src/Comunicacao.cpp
 Invoking: GCC C++ Compiler
-g++ -I"/home/ramonmaciel/MEGA/MEGAsyncUploads/IFBA/iot/TrakedCar_IoT/Cpp/daemon/include" -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/Comunicacao.d" -MT"src/Comunicacao.d" -o "src/Comunicacao.o" "../src/Comunicacao.cpp"
+g++ -I"/home/randler/DESENVOLVIMENTO/IotGit/TrakedCar_IoT/Cpp/daemon/include" -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/Comunicacao.d" -MT"src/Comunicacao.d" -o "src/Comunicacao.o" "../src/Comunicacao.cpp"
 ../src/Comunicacao.cpp:62:15: warning: extra tokens at end of #ifdef directive
  #ifdef _WIN32 || _WIN64
                ^
@@ -10,7 +10,11 @@ Finished building: ../src/Comunicacao.cpp
  
 Building file: ../src/daemon.cpp
 Invoking: GCC C++ Compiler
-g++ -I"/home/ramonmaciel/MEGA/MEGAsyncUploads/IFBA/iot/TrakedCar_IoT/Cpp/daemon/include" -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/daemon.d" -MT"src/daemon.d" -o "src/daemon.o" "../src/daemon.cpp"
+g++ -I"/home/randler/DESENVOLVIMENTO/IotGit/TrakedCar_IoT/Cpp/daemon/include" -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/daemon.d" -MT"src/daemon.d" -o "src/daemon.o" "../src/daemon.cpp"
+../src/daemon.cpp: In function ‘int main(int, char**)’:
+../src/daemon.cpp:182:26: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+   com = Comunicacao(PORTA);
+                          ^
 Finished building: ../src/daemon.cpp
  
 Building target: daemon
@@ -18,3 +22,6 @@ Invoking: GCC C++ Linker
 g++  -o "daemon"  ./src/Comunicacao.o ./src/daemon.o   
 Finished building target: daemon
  
+
+00:22:10 Build Finished (took 1s.204ms)
+

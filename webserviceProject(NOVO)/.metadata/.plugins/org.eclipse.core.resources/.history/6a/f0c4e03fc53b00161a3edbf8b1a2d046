@@ -1,0 +1,69 @@
+package br.edu.ifba.embarcados.webcoisas.factoryBD.comandos;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import br.edu.ifba.embarcados.webcoisas.bean.Carro;
+import br.edu.ifba.embarcados.webcoisas.bean.Usuario;
+
+import com.mysql.cj.jdbc.PreparedStatement;
+
+public class Adicionar {
+	private static Adicionar adicionar = null;
+	
+	private Adicionar(){
+		
+	}
+	
+	public static Adicionar getInstancia(){
+		if(adicionar == null){
+			adicionar = new Adicionar();
+		}		
+		return adicionar;		
+	}	
+	
+	public void adicionarCarro(int usuarioId, Carro carro, Connection con) throws SQLException{
+		 // cria um preparedStatement
+        String sql = "insert into Carro" +
+                " (idCarro,nomeCarro,statusCarro, marcaCarro, anoCarro,Usuario_idUsuario)" +
+                " values (?,?,?,?,?,?)";
+        PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
+        
+        
+        // preenche os valores
+        stmt.setInt(1, carro.getId());
+        stmt.setString(2, carro.getNome());
+        stmt.setBoolean(3, false);
+        stmt.setString(4, carro.getMarca());
+        stmt.setString(5, carro.getAno());
+        stmt.setInt(6,usuarioId);
+
+        // executa
+        stmt.execute();
+        stmt.close();
+
+        System.out.println("Gravado!");
+		
+	}
+	
+	public void adicionarUsuario(Usuario usuario, Connection con) throws SQLException{
+		 // cria um preparedStatement
+       String sql = "insert into Usuario" +
+               " (idUsuario,nomeUsuario)" +
+               " values (?,?)";
+       PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
+       
+       
+       // preenche os valores
+       stmt.setInt(1, usuario.getId());
+       stmt.setString(2, usuario.getNome());
+       // executa
+       stmt.execute();
+       stmt.close();
+
+       System.out.println("Gravado!");
+		
+	}
+	
+	
+}

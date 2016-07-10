@@ -1,0 +1,29 @@
+package br.edu.ifba.embarcados.webcoisas.dao;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import br.edu.ifba.embarcados.webcoisas.bean.Carro;
+import br.edu.ifba.embarcados.webcoisas.bean.Usuario;
+
+import com.mysql.cj.jdbc.PreparedStatement;
+
+public class Adicionar {
+	private static Adicionar adicionar = null;
+	
+	private Adicionar(){
+		
+	}
+	
+	public static Adicionar getInstancia(){
+		if(adicionar == null){
+			adicionar = new Adicionar();
+		}		
+		return adicionar;		
+	}	
+	
+	
+	
+	
+	
+}

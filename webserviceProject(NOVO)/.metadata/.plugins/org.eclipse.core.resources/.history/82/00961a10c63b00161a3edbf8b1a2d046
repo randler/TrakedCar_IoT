@@ -1,0 +1,34 @@
+package br.edu.ifba.embarcados.webcoisas.dao;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import br.edu.ifba.embarcados.webcoisas.bean.Carro;
+import br.edu.ifba.embarcados.webcoisas.bean.Usuario;
+
+import com.mysql.cj.jdbc.PreparedStatement;
+
+public class Consultar {
+
+	private List<Usuario> usuario = new ArrayList<Usuario>();
+	
+	private static Consultar consultar = null;
+	
+	private Consultar(){
+		
+	}
+	
+	public static Consultar getInstancia(){
+		if(consultar == null){
+			consultar = new Consultar();
+		}		
+		return consultar;		
+	}
+	
+	
+	
+
+}

@@ -1,0 +1,68 @@
+package br.edu.ifba.embarcados.clientewebcoisas;
+
+import java.awt.Image;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import org.apache.http.ConnectionClosedException;
+
+import br.edu.ifba.embarcados.clientewebcoisas.bean.Carro;
+import br.edu.ifba.embarcados.clientewebcoisas.bean.Usuario;
+import br.edu.ifba.embarcados.clientewebcoisas.conector.Conector;
+import br.edu.ifba.embarcados.clientewebcoisas.email.SendEmail;
+import br.edu.ifba.embarcados.clientewebcoisas.factory.ConnectionFactory;
+import br.edu.ifba.embarcados.clientewebcoisas.factory.comandos.Adicionar;
+import br.edu.ifba.embarcados.clientewebcoisas.factory.comandos.Alterar;
+import br.edu.ifba.embarcados.clientewebcoisas.factory.comandos.Consultar;
+import br.edu.ifba.embarcados.clientewebcoisas.factory.comandos.Remover;
+import br.edu.ifba.embarcados.clientewebcoisas.webcam.MyWebcam;
+
+public class Executor {
+
+
+
+	private static MyWebcam webcam = MyWebcam.getInstancia();
+	private static SendEmail email = SendEmail.getInstancia();		
+	
+	private static final String localSaida = "Saida A";
+	
+	@SuppressWarnings("static-access")
+	public static void main(String[] args) throws InterruptedException, ConnectionClosedException {
+		Conector conector = new Conector();
+		webcam.executarWebcam();
+		
+		while (true) {
+				Integer id = conector.getId();
+				if(id != -1){
+					if(conector.consultaCarro(id)){
+						Image foto = webcam.tirarFoto();						
+						email.sendMail(getHora(), getData(), localSaida, foto);
+					}
+				}
+				System.out.println("id = " + id);						
+				Thread.sleep(1000);
+		}
+	}
+	
+	
+	
+	// ---------------------------------------- Pegar Data ------------------------------
+	private static String getHora(){
+		return Calendar.HOUR_OF_DAY + ":" + Calendar.MINUTE + ":" + Calendar.SECOND;
+	}
+	
+	private static String getData(){
+		String saida=  "";
+		int dia = Calendar.DAY_OF_MONTH;
+		int mes = Calendar.MONTH;
+		int ano = Calendar.YEAR;
+		
+		saida = dia + "/" + (mes+1) + "/" + ano;
+		return saida;
+	}
+	
+}

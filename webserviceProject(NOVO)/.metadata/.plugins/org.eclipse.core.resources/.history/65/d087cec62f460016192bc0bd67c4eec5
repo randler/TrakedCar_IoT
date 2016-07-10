@@ -1,0 +1,5 @@
+package com.k19.restful.resources;
+
+public class HelloWorldResource {
+
+}

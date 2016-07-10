@@ -1,0 +1,44 @@
+package br.edu.ifba.embarcados.clientewebcoisas.factory.comandos;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import br.edu.ifba.embarcados.clientewebcoisas.bean.Carro;
+import br.edu.ifba.embarcados.clientewebcoisas.bean.Usuario;
+
+import com.mysql.cj.jdbc.PreparedStatement;
+
+public class Consultar {
+	private List<Carro> carros = new ArrayList<Carro>();
+	private List<Usuario> usuario = new ArrayList<Usuario>();
+	
+	public void concultarCarro(Connection con){
+		try {
+			PreparedStatement stmt = (PreparedStatement) con.prepareStatement("select * from Carro");
+		
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()){
+				Carro carro = new Carro();
+				
+				carro.setNome(rs.getString("nomeCarro"));
+				carro.setStatus(rs.getBoolean("statusCarro"));
+				carro.setMarca(rs.getString("marcaCarro"));
+				carro.setAno(rs.getString("anoCarro"));
+				carro.setUsuarioCarro(rs.getInt("Usuario_isUsuario"));
+				
+				carros.add(carro);				
+				
+			}
+			
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}

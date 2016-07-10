@@ -1,0 +1,76 @@
+package br.edu.ifba.embarcados.clientewebcoisas;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.ConnectionClosedException;
+
+import br.edu.ifba.embarcados.clientewebcoisas.bean.Carro;
+import br.edu.ifba.embarcados.clientewebcoisas.bean.Usuario;
+import br.edu.ifba.embarcados.clientewebcoisas.conector.Conector;
+import br.edu.ifba.embarcados.clientewebcoisas.factory.ConnectionFactory;
+import br.edu.ifba.embarcados.clientewebcoisas.factory.comandos.Adicionar;
+import br.edu.ifba.embarcados.clientewebcoisas.factory.comandos.Consultar;
+
+public class Executor {
+
+	private static Adicionar adicionar = Adicionar.getInstancia();
+	private static Consultar consultar = Consultar.getInstancia();
+		
+	private static Connection con = new ConnectionFactory().getConnection();
+	
+	public static void main(String[] args) throws InterruptedException, ConnectionClosedException {
+		Conector conector = new Conector();
+
+		consultaCarro(1);
+//		while (true) {
+//				Integer id = conector.getId();
+//				System.out.println("id = " + id);						
+//				Thread.sleep(200);
+//		}
+	}
+	
+	public void addUser(String name){
+			
+		try {
+			Usuario usuario = new Usuario(1,name);	
+			
+			adicionar.adicionarUsuario(usuario, con);
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void addCar(String nome, String marca, String ano, Usuario usuario){
+		
+		try {
+			Carro carro = new Carro(1, nome, marca, ano, usuario.getId());
+			
+			adicionar.adicionarCarro(usuario.getId(), carro, con);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void consultaCarro(int id){
+		List<Carro> carros = new ArrayList<Carro>();
+		carros = consultar.concultarCarro(con);
+		
+		
+		if(carros.contains(id)){
+			System.out.println("Tem, Tira a foto");
+		}else{
+			System.out.println("Não tem");
+		}
+		
+		
+	}
+}
