@@ -72,14 +72,19 @@ public class CarroDAO {
 	
 	
 	
-	public static List<Carro> concultarCarro(Connection con){
-		try {
-			PreparedStatement stmt = (PreparedStatement) con.prepareStatement("select * from Carro");
+	public static boolean concultarCarro(Connection con, int id){
+		boolean saida = false;
+		Carro carro = new Carro();
 		
+		try {
+			PreparedStatement stmt = (PreparedStatement) con.prepareStatement("select * from Carro where idCarro = ?");
+		
+			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
 			
+			
 			while(rs.next()){
-				Carro carro = new Carro();
+				
 				
 				carro.setId(rs.getInt("idCarro"));
 				carro.setNome(rs.getString("nomeCarro"));
@@ -88,7 +93,7 @@ public class CarroDAO {
 				carro.setAno(rs.getString("anoCarro"));
 				carro.setUsuarioCarro(rs.getInt("Usuario_idUsuario"));
 				
-				carros.add(carro);				
+								
 				
 			}
 			
@@ -97,8 +102,11 @@ public class CarroDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return carros;
+		if(carro.isStatus())
+			saida = true;
+			
+			
+		return saida;
 	}
 
 }

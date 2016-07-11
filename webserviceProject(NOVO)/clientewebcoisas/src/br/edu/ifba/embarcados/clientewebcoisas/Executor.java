@@ -19,19 +19,19 @@ public class Executor {
 	@SuppressWarnings("static-access")
 	public static void main(String[] args) throws InterruptedException, ConnectionClosedException {
 		Conector conector = new Conector();
-		//webcam.executarWebcam();
-		conector.adicionar();
-//		while (true) {
-//				Integer id = conector.getId();
-//				if(id != -1){
-//					if(conector.consultaCarro()){
-//						Image foto = webcam.tirarFoto();						
-//						email.sendMail(getHora(), getData(), localSaida, foto);
-//					}
-//				}
-//				System.out.println("id = " + id);						
-//				Thread.sleep(1000);
-//		}
+		webcam.executarWebcam();
+		
+		while (true) {
+				Integer id = conector.getId();
+				if(id != -1){
+					if(conector.consultaCarro(id)){
+						Image foto = webcam.tirarFoto();						
+						email.sendMail(getHora(), getData(), localSaida, foto);
+					}
+				}
+				System.out.println("id = " + id);						
+				Thread.sleep(1000);
+		}
 		
 	}
 	

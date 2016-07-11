@@ -52,50 +52,7 @@ public class Conector {
 		
 	}
 	
-	private void adicionar(String url, String message) throws IOException, IllegalStateException, UnsupportedEncodingException, RuntimeException{
-	
-		try{
-		URL urlC = new URL(ENDERECO_WS+url);
-		HttpURLConnection conn = (HttpURLConnection) urlC.openConnection();
-		conn.setDoOutput(true);
-		conn.setRequestMethod("POST");
-		conn.setRequestProperty("Content-Type", "application/json");
 		
-		
-		OutputStream os = conn.getOutputStream();
-		os.write(message.getBytes());
-		os.flush();
-
-//		if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
-//			throw new RuntimeException("Failed : HTTP error code : "
-//				+ conn.getResponseCode());
-//		}
-		
-		BufferedReader br = new BufferedReader(new InputStreamReader(
-				(conn.getInputStream())));
-		
-		String output;
-		System.out.println("Output from Server .... \n");
-		while ((output = br.readLine()) != null) {
-			System.out.println(output);
-		}
-
-		conn.disconnect();
-
-	} catch (MalformedURLException e) {
-
-		e.printStackTrace();
-
-	  } catch (IOException e) {
-
-		e.printStackTrace();
-
-	 }
-
-	
-	}
-	
-	
 	public Integer getId() {
 		Integer id = -1;
 
@@ -107,37 +64,20 @@ public class Conector {
 		return id;
 	}
 
-	public boolean consultaCarro() {
+	public boolean consultaCarro(int id) {
 		boolean saida = false;
-		String sid = acessar("consultar");
+		String sid = acessar("consultar/"+id);
 		
 		if(sid != ""){
 			System.out.println(sid);
-			saida = true;
+			if(sid == "true")
+				saida = true;
 		}
 		
 		return saida;
 	}
 	
-	public boolean adicionar() {
-		boolean saida = false;
-		
-	    String message = "[{\"idUsuario\":\"1\",\"nomeUsuario\":\"Joao\",\"email\":\"Joao@joao\",\"idCarro\":\"123456789\",\"nomeCarro\":\"Uno\",\"marcaCarro\":\"Fiat\",\"anoCarro\":\"1\",\"Usuario_idUsuario\":\"1\"}]";
-	    
-	    try {
-	    	
-	  	   	adicionar("adicionar", message);
-			saida = true;
-			
-	    } catch (IOException | RuntimeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	    
-	    
-		
-		return saida;
-	}
+
 	
 	
 }

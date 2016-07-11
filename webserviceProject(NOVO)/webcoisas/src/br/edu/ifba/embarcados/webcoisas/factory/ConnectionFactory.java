@@ -24,6 +24,7 @@ public class ConnectionFactory {
 	
 	public static Connection getConnection(){
 		try {			
+			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 			return DriverManager.getConnection(url,user,password);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);

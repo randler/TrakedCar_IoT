@@ -30,7 +30,6 @@
 <fullyQualifiedTypeName name="br.edu.ifba.embarcados.webcoisas.dao.UsuarioDAO"/>
 <fullyQualifiedTypeName name="br.edu.ifba.embarcados.webcoisas.dao.CarroDAO"/>
 <fullyQualifiedTypeName name="javax.ws.rs.POST"/>
-<fullyQualifiedTypeName name="javax.ws.rs.PathParam"/>
 <fullyQualifiedTypeName name="javax.ws.rs.Consumes"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="com.google.gson.Gson"/>
@@ -41,4 +40,5 @@
 <fullyQualifiedTypeName name="javax.ws.rs.PUT"/>
 <fullyQualifiedTypeName name="java.net.MalformedURLException"/>
 <fullyQualifiedTypeName name="javax.ws.rs.Produces"/>
+<fullyQualifiedTypeName name="javax.ws.rs.PathParam"/>
 </qualifiedTypeNameHistroy>
