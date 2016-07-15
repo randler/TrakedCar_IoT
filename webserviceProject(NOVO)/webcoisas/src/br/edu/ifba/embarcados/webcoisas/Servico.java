@@ -19,26 +19,25 @@ import br.edu.ifba.embarcados.webcoisas.bean.Usuario;
 import br.edu.ifba.embarcados.webcoisas.dao.CarroDAO;
 import br.edu.ifba.embarcados.webcoisas.dao.UsuarioDAO;
 import br.edu.ifba.embarcados.webcoisas.factory.ConnectionFactory;
-import br.edu.ifba.embarcados.webcoisas.sensoriamento.LeitorSensoriamento;
 
 import com.google.gson.Gson;
 
 @Path("servico")
 public class Servico {
 
-	@GET
-	@Path("/id/")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String getId() {
-		return LeitorSensoriamento.getRFID() + "";
-	}
+//	@GET
+//	@Path("/id/")
+//	@Produces(MediaType.TEXT_PLAIN)
+//	public String getId() {
+//		return LeitorSensoriamento.getRFID() + "";
+//	}
 
-	@GET
-	@Path("/sensores")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String getSensores() {
-		return LeitorSensoriamento.getSensores() + "";
-	}
+//	@GET
+//	@Path("/sensores")
+//	@Produces(MediaType.TEXT_PLAIN)
+//	public String getSensores() {
+//		return LeitorSensoriamento.getSensores() + "";
+//	}
 
 	@GET
 	@Path("/consultar/{id}")
