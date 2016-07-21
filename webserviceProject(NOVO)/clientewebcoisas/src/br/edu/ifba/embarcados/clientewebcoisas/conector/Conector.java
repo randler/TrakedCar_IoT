@@ -12,6 +12,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import net.sf.json.JSONObject;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -21,8 +23,10 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import br.edu.ifba.embarcados.clientewebcoisas.bean.Carro;
+import br.edu.ifba.embarcados.clientewebcoisas.bean.Usuario;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 @SuppressWarnings("deprecation")
 public class Conector {
@@ -37,6 +41,7 @@ public class Conector {
 		HttpClient cliente = new DefaultHttpClient();
 		HttpGet get = new HttpGet(ENDERECO_WS + urlFuncao);
 		HttpResponse resposta;
+		
 		
 		try {
 			resposta = cliente.execute(get);
@@ -69,10 +74,34 @@ public class Conector {
 		String sid = acessar("consultar/"+id);
 		
 		if(sid != ""){
-			System.out.println(sid);
-			if(sid == "true")
+			if(sid.equals("true"))
 				saida = true;
 		}
+		
+		
+		return saida;
+	}
+	
+	public Usuario consultarUsuarioRoubado(int id) {
+		String user_id = acessar("consultarRoubo/"+id);
+		Usuario user = new Usuario();
+		
+		Gson gson = new GsonBuilder().create();
+		user = gson.fromJson(user_id, Usuario.class); 
+		
+		return user;
+	}
+
+
+	public boolean notificarRoubo(Integer id) {
+		boolean saida = false;
+		
+		String sid = acessar("notificarRoubo/"+id);
+		if(sid != ""){
+			if(sid.equals("true"))
+				saida = true;
+		}
+		
 		
 		return saida;
 	}

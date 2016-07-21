@@ -1,0 +1,122 @@
+package br.edu.ifba.mobile.andro.esteira.fragmentos;
+
+import java.util.List;
+
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+import br.edu.ifba.mobile.andro.esteira.EsteiraActivity;
+import br.edu.ifba.mobile.andro.esteira.R;
+import br.edu.ifba.mobile.andro.esteira.bean.Esteira;
+import br.edu.ifba.mobile.andro.esteira.bean.Historico;
+import br.edu.ifba.mobile.andro.esteira.bean.Usuario;
+import br.edu.ifba.mobile.andro.esteira.fachadas.FachadaBD;
+import br.edu.ifba.mobile.andro.esteira.tasks.ExecutorApagar;
+import br.edu.ifba.mobile.andro.esteira.tasks.SincronizadorHistorico;
+
+@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+public class FragmentoHistorico extends Fragment {
+
+	private static final int SEC_NUMBER = 1;
+	private AlertDialog alertDialog;
+	private static final String ARG_SECTION_NUMBER = "section_number";
+	private static FragmentoHistorico fragmento;
+	private Usuario usuario;
+	private Historico historico;
+
+	public static FragmentoHistorico getInstancia() {
+		if (fragmento == null) {
+			fragmento = new FragmentoHistorico();
+			Bundle args = new Bundle();
+			args.putInt(ARG_SECTION_NUMBER, SEC_NUMBER);
+			fragmento.setArguments(args);
+
+		}
+
+		return fragmento;
+	}
+
+	ListView listaPedidos = null;
+	private List<Historico> listaHist;
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View rootView = inflater.inflate(R.layout.fragment_historico,
+				container, false);
+
+		listaPedidos = (ListView) rootView.findViewById(R.id.listaHistorico);
+		listaPedidos.setClickable(true);
+		listaPedidos.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+		fragmento.refresHistorico();
+
+		return rootView;
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		((EsteiraActivity) activity).onSectionAttached(getArguments().getInt(
+				ARG_SECTION_NUMBER));
+	}
+
+	public void refresHistorico() {
+		SincronizadorHistorico sincronizador = new SincronizadorHistorico(this);
+		sincronizador.execute();
+	}
+
+	public void atualizarListaHistorico(List<Historico> historico) {
+		this.listaHist = historico;
+		if (historico != null) {
+			ArrayAdapter<Historico> adaptador = new ArrayAdapter<Historico>(
+					this.getActivity(),
+					android.R.layout.simple_list_item_single_choice, historico);
+			listaPedidos.setAdapter(adaptador);
+		}
+	}
+
+	public Historico getHistorico() {
+		Historico historico = null;
+
+		int pos = listaPedidos.getCheckedItemPosition();
+
+		if (pos != ListView.INVALID_POSITION) {
+			historico = (Historico) listaPedidos.getItemAtPosition(pos);
+
+		}
+
+		return historico;
+	}
+
+	public Fragment setContexto(Usuario usuario, Historico hist) {
+		this.usuario = usuario;
+		this.historico = hist;
+		return this;
+
+	}
+
+	public Fragment apagar(Usuario usuario2, Historico hist) {
+		FachadaBD.getInstancia().apagarHistorico(hist, usuario2);
+		fragmento.refresHistorico();
+		return this;
+	}
+
+	public void cancelarPedido(int cpf) {
+		ExecutorApagar executor = new ExecutorApagar(cpf, this, listaHist);
+		executor.execute();
+	}
+
+}

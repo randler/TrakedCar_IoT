@@ -52,9 +52,9 @@
 		<item value="false" key="FinalModifier"/>
 	</section>
 	<section name="DialogBounds_GetterSetterTreeSelectionDialog">
-		<item value="660" key="DIALOG_WIDTH"/>
+		<item value="662" key="DIALOG_WIDTH"/>
 		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
-		<item value="772" key="DIALOG_HEIGHT"/>
+		<item value="801" key="DIALOG_HEIGHT"/>
 		<item value="64" key="DIALOG_X_ORIGIN"/>
 		<item value="0" key="DIALOG_Y_ORIGIN"/>
 	</section>

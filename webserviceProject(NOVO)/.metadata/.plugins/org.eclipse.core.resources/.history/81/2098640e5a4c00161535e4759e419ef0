@@ -1,0 +1,161 @@
+package br.edu.ifba.mobile.andro.esteira.fragmentos;
+
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import br.edu.ifba.mobile.andro.esteira.EsteiraActivity;
+import br.edu.ifba.mobile.andro.esteira.R;
+import br.edu.ifba.mobile.andro.esteira.bean.Esteira;
+import br.edu.ifba.mobile.andro.esteira.bean.Usuario;
+import br.edu.ifba.mobile.andro.esteira.tasks.ExecutorComandoControle;
+
+
+@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+public class FragmentoControl extends Fragment {
+
+	private static final int SEC_NUMBER = 1;
+
+	private static final String ARG_SECTION_NUMBER = "section_number";
+	private static FragmentoControl fragmento;
+	private TextView text = null;
+	private TextView textNome = null;
+	private Button up = null;
+	private Button down = null;
+	private Button plus = null;
+	private Button sub = null;
+	private Button on_off = null;
+	private ImageView imagem = null;
+	private int botao;
+	private boolean display;
+	private Usuario user;
+	private Esteira esteira;
+
+	public static FragmentoControl getInstancia() {
+		if (fragmento == null) {
+			fragmento = new FragmentoControl();
+			Bundle args = new Bundle();
+			args.putInt(ARG_SECTION_NUMBER, SEC_NUMBER);
+			fragmento.setArguments(args);
+		}
+
+		return fragmento;
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View rootView = inflater.inflate(R.layout.activity_controle, container,
+				false);
+
+		text = (TextView) rootView.findViewById(R.id.textViewDisplay);
+		textNome = (TextView) rootView.findViewById(R.id.textViewName);
+			
+		
+		up = (Button) rootView.findViewById(R.id.imageViewUp);
+		down = (Button) rootView.findViewById(R.id.imageViewDown);
+		plus = (Button) rootView.findViewById(R.id.imageViewPlus);
+		sub = (Button) rootView.findViewById(R.id.imageViewSub);
+		on_off = (Button) rootView.findViewById(R.id.imageViewOn);
+		textNome.setText(esteira.getNome());
+		text.setText(esteira.setDisplay(esteira));
+		
+		if(display)
+			on_off.setBackgroundResource(R.drawable.ic_power_off);
+		else
+			on_off.setBackgroundResource(R.drawable.ic_power_on);
+
+		on_off.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (!display) {
+					display = true;
+					botao = 1;
+					executarComando();
+					on_off.setBackgroundResource(R.drawable.ic_power_off);
+				} else {
+					display = false;
+					botao = 2;
+					executarComando();
+					
+					on_off.setBackgroundResource(R.drawable.ic_power_on);
+				}
+			}
+		});
+		
+		plus.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				botao = 3;
+				executarComando();				
+			}
+		});
+
+		sub.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				botao = 4;
+				executarComando();				
+			}
+		});
+
+		up.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				botao = 5;
+				executarComando();				
+			}
+		});
+
+		down.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				botao = 6;
+				executarComando();				
+			}
+		});
+
+
+		
+		return rootView;
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		((EsteiraActivity) activity).onSectionAttached(getArguments().getInt(
+				ARG_SECTION_NUMBER));
+	}
+
+	public Fragment setContexto(Usuario usuario, Esteira esteira) {
+		this.esteira = esteira;
+		if(esteira.getStatus() == 0)
+			this.display=false;
+		else
+			this.display=true;
+		this.user = usuario;
+		return this;
+	}
+
+	public void executarComando() {
+		ExecutorComandoControle sincronizador = new ExecutorComandoControle(
+				botao, user, esteira, this);
+		sincronizador.execute();
+	}
+	public void setDisplay(Esteira esteira){
+		text.setText(esteira.setDisplay(esteira));
+	}
+
+}

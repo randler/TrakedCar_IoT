@@ -1,0 +1,35 @@
+package br.edu.ifba.mobile.andro.esteira.tasks;
+
+import java.util.List;
+
+import android.os.AsyncTask;
+import android.widget.Toast;
+import br.edu.ifba.mobile.andro.esteira.bean.Historico;
+import br.edu.ifba.mobile.andro.esteira.fragmentos.FragmentoHistorico;
+
+public class ExecutorApagar extends AsyncTask<Void, Void, String> {
+
+	private int cpf;
+	private FragmentoHistorico historico;
+	private List<Historico> historicoLista;
+
+	public ExecutorApagar(int cpf, FragmentoHistorico historico,List<Historico> historicoLista) {
+		this.cpf = cpf;
+		this.historico = historico;
+		this.historicoLista=historicoLista;
+	}
+
+	@Override
+	protected String doInBackground(Void... parametros) {
+		return null;
+	}
+
+	@Override
+	public void onPostExecute(String resultado) {
+		historico.atualizarListaHistorico(historicoLista);
+
+	Toast.makeText(historico.getActivity(), resultado, Toast.LENGTH_LONG)
+				.show();
+	}
+
+}

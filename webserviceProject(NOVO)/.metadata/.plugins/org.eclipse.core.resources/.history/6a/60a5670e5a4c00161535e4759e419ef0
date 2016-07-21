@@ -1,0 +1,148 @@
+package br.edu.ifba.mobile.andro.esteira.bean;
+
+public class Historico {
+
+	private int id;
+	private String nome;
+	private int velocidade = 0;
+	private int status=0;
+	private int direcao=0;
+	private String data;
+	private int statusVelocidade;
+	private int statusDirecao;
+	private int cpfu;
+	private int idhist;
+	
+
+
+	public int getIdhist() {
+		return idhist;
+	}
+
+	public void setIdhist(int idhist) {
+		this.idhist = idhist;
+	}
+
+	public int getCpfu() {
+		return cpfu;
+	}
+
+	public void setCpfu(int cpfu) {
+		this.cpfu = cpfu;
+	}
+
+	public int getStatusDirecao() {
+		return statusDirecao;
+	}
+
+	public void setStatusDirecao(int statusDirecao) {
+		this.statusDirecao = statusDirecao;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+	
+	public void setVelocidade(int velocidade) {
+		this.velocidade=velocidade;		
+	}
+
+	public int getVelocidade() {
+		return this.velocidade;
+	}
+	
+	public int getStatus() {
+		return status;
+	}
+	
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	
+	public void setDirecao(int direcao) {
+		this.direcao=direcao;		
+	}
+
+	
+	public int getDirecao() {
+		return direcao;
+	}
+	
+	public void setNome (String nome){
+		this.nome = nome;
+	}
+	
+	public int getId() {
+		return id;		
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	
+	public String getData() {
+		return data;
+	}
+
+	public void setData(String data) {
+		this.data = data;
+	}
+	
+
+	public String setDisplay(Historico historico){
+		String saida="";
+		if(historico.getStatus() == 0)
+			saida+="Status: Desligada!";
+		else
+			saida+="Status Ligada!";
+		
+		if(historico.getDirecao() == 1)
+			saida+=" - Direcao: Frente";
+		else
+			saida+=" - Direcao: Tras";
+		if(historico.getVelocidade()<=30)
+			saida+=" - Velocidade: "+velocidade;
+			else if(historico.getVelocidade() <=0)
+				saida+= " - Velocidade: "+0;
+			else
+				saida+= " - Velocidade: "+30;
+		
+		return saida;
+	}
+
+
+	public int getStatusVelocidade() {
+		return statusVelocidade;
+	}
+
+	public void setStatusVelocidade(int statusVelocidade) {
+		this.statusVelocidade = statusVelocidade;
+	}
+
+	public String toString(){
+		String saida="";
+		if(getStatus() == 0)
+			saida+="Status: Desligada!";
+		else
+			saida+="Status Ligada!";
+		
+		if(getDirecao() == 1)
+			saida+=" - Direcao: Frente";
+		else
+			saida+=" - Direcao: Tras";
+		if(getVelocidade()<=30)
+			saida+=" - Velocidade: "+velocidade;
+			else if(getVelocidade() <=0)
+				saida+= " - Velocidade: "+0;
+			else
+				saida+= " - Velocidade: "+30;
+		return "Nome: "+ nome+
+					" - "+saida;
+	} 
+
+
+
+
+}

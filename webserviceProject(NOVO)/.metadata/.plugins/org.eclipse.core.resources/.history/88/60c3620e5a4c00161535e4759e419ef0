@@ -1,0 +1,61 @@
+package br.edu.ifba.mobile.andro.esteira.tasks;
+
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
+import java.util.List;
+
+import android.annotation.TargetApi;
+import android.database.sqlite.SQLiteException;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.util.Log;
+import android.widget.Toast;
+import br.edu.ifba.mobile.andro.esteira.bean.Esteira;
+import br.edu.ifba.mobile.andro.esteira.fachadas.FachadaBD;
+import br.edu.ifba.mobile.andro.esteira.fachadas.FachadaWS;
+import br.edu.ifba.mobile.andro.esteira.fragmentos.FragmentoEsteira;
+
+public class SincronizadorEsteira extends AsyncTask<Void, Void, String> {
+
+	private List<Esteira> esteiras = new ArrayList<Esteira>();
+	private FragmentoEsteira fragmentoEsteira;
+
+	public SincronizadorEsteira(FragmentoEsteira fragmentoEsteira) {
+		this.fragmentoEsteira = fragmentoEsteira;
+	}
+
+	@Override
+	protected String doInBackground(Void... parametros) {
+		String out = "";
+		try {
+			esteiras = FachadaWS.getInstancia().getEsteiras();
+			for (int i = 0; i < esteiras.size(); i++) {
+				try{
+				FachadaBD.getInstancia().inserirEsteira(esteiras.get(i));
+				}catch(SQLiteException e){
+					Toast.makeText(fragmentoEsteira.getActivity(), "Esteira adicionada no bd",
+							Toast.LENGTH_LONG).show();
+				}
+			}
+			out = "Lista de esteiras sincronizada!";
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Log.e("Sincronizador::doInBackground", "Erro ao sincronizar!");
+
+			out = "Erro ao sincronizar!";
+		}
+
+		return out;
+	}
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	@Override
+	public void onPostExecute(String resultado) {
+		fragmentoEsteira.refreshEsteiras(esteiras);
+
+		Toast.makeText(fragmentoEsteira.getActivity(), resultado,
+				Toast.LENGTH_LONG).show();
+	}
+
+}

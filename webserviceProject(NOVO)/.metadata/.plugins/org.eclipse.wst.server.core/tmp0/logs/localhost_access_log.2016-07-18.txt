@@ -1,0 +1,13 @@
+127.0.0.1 - - [18/Jul/2016:21:26:34 -0300] "GET / HTTP/1.1" 404 994
+127.0.0.1 - - [18/Jul/2016:21:34:45 -0300] "GET /webcoisas/v1/servico/consultar/1 HTTP/1.1" 200 15
+127.0.0.1 - - [18/Jul/2016:21:34:46 -0300] "GET /favicon.ico HTTP/1.1" 404 1016
+127.0.0.1 - - [18/Jul/2016:21:34:47 -0300] "GET /favicon.ico HTTP/1.1" 404 1016
+127.0.0.1 - - [18/Jul/2016:21:35:14 -0300] "GET /webcoisas/v1/servico/consultar/805340 HTTP/1.1" 200 14
+192.168.0.100 - - [18/Jul/2016:21:35:51 -0300] "GET /webcoisas/v1/servico/consultar/2 HTTP/1.1" 200 15
+192.168.0.100 - - [18/Jul/2016:21:35:51 -0300] "GET /favicon.ico HTTP/1.1" 404 1016
+192.168.0.100 - - [18/Jul/2016:21:36:03 -0300] "GET /webcoisas/v1/servico/consultar/805340 HTTP/1.1" 200 14
+192.168.0.100 - - [18/Jul/2016:22:01:49 -0300] "GET /favicon.ico HTTP/1.1" 404 1016
+127.0.0.1 - - [18/Jul/2016:22:12:57 -0300] "GET /webcoisas/v1/servico/adicionar/11840176///78932616////11840176 HTTP/1.1" 404 -
+127.0.0.1 - - [18/Jul/2016:22:13:11 -0300] "GET /webcoisas/v1/servico/adicionar/11840176///78932616////11840176 HTTP/1.1" 404 -
+127.0.0.1 - - [18/Jul/2016:22:13:30 -0300] "GET /webcoisas/v1/servico/adicionar/11840176/1/1/78932616/1/1/1/11840176 HTTP/1.1" 200 14
+127.0.0.1 - - [18/Jul/2016:22:25:46 -0300] "GET /webcoisas/v1/servico/notificarRoubo/78932616 HTTP/1.1" 200 14

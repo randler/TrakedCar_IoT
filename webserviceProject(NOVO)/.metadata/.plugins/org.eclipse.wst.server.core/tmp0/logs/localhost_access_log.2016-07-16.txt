@@ -1,0 +1,15 @@
+127.0.0.1 - - [16/Jul/2016:23:46:03 -0300] "GET / HTTP/1.1" 404 994
+127.0.0.1 - - [16/Jul/2016:23:46:59 -0300] "GET /webcoisas/v1/servico/consultar/1 HTTP/1.1" 200 15
+127.0.0.1 - - [16/Jul/2016:23:46:59 -0300] "GET /favicon.ico HTTP/1.1" 404 1016
+127.0.0.1 - - [16/Jul/2016:23:46:59 -0300] "GET /favicon.ico HTTP/1.1" 404 1016
+127.0.0.1 - - [16/Jul/2016:23:47:08 -0300] "GET /webcoisas/v1/servico/consultarRoubo/2 HTTP/1.1" 200 52
+127.0.0.1 - - [16/Jul/2016:23:48:37 -0300] "GET /webcoisas/v1/servico/consultarRoubo/805340837 HTTP/1.1" 200 56
+127.0.0.1 - - [16/Jul/2016:23:50:23 -0300] "GET /webcoisas/v1/servico/consultarRoubo/805340837 HTTP/1.1" 200 66
+127.0.0.1 - - [16/Jul/2016:23:51:10 -0300] "GET /webcoisas/v1/servico/consultarRoubo/805340837 HTTP/1.1" 200 66
+127.0.0.1 - - [16/Jul/2016:23:51:12 -0300] "GET /webcoisas/v1/servico/consultarRoubo/805340837 HTTP/1.1" 200 66
+127.0.0.1 - - [16/Jul/2016:23:54:47 -0300] "GET /webcoisas/v1/servico/consultarRoubo/1 HTTP/1.1" 200 18
+127.0.0.1 - - [16/Jul/2016:23:54:50 -0300] "GET /webcoisas/v1/servico/consultarRoubo/2 HTTP/1.1" 200 18
+127.0.0.1 - - [16/Jul/2016:23:54:54 -0300] "GET /webcoisas/v1/servico/consultar/2 HTTP/1.1" 200 15
+127.0.0.1 - - [16/Jul/2016:23:54:57 -0300] "GET /webcoisas/v1/servico/consultar/1 HTTP/1.1" 200 15
+127.0.0.1 - - [16/Jul/2016:23:55:00 -0300] "GET /webcoisas/v1/servico/consultar/805340837 HTTP/1.1" 200 15
+127.0.0.1 - - [16/Jul/2016:23:55:03 -0300] "GET /webcoisas/v1/servico/consultar/805340837 HTTP/1.1" 200 15

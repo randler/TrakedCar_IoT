@@ -1,0 +1,181 @@
+package br.edu.ifba.mobile.andro.esteira.tasks;
+
+import java.util.Calendar;
+
+import android.os.AsyncTask;
+import android.widget.Toast;
+import br.edu.ifba.mobile.andro.esteira.bean.Esteira;
+import br.edu.ifba.mobile.andro.esteira.bean.Usuario;
+import br.edu.ifba.mobile.andro.esteira.fachadas.FachadaBD;
+import br.edu.ifba.mobile.andro.esteira.fachadas.FachadaWS;
+import br.edu.ifba.mobile.andro.esteira.fragmentos.FragmentoControl;
+
+
+public class ExecutorComandoControle extends AsyncTask<Void, Void, String> {
+
+	private int botao;
+	private FragmentoControl controle;
+	private Usuario usuario;
+	private Esteira esteira;
+
+	public ExecutorComandoControle(int botao, Usuario usuario, Esteira esteira,
+			FragmentoControl controle) {
+		this.usuario = usuario;
+		this.esteira = esteira;
+		this.controle = controle;
+		this.botao = botao;
+	}
+
+	@Override
+	protected String doInBackground(Void... parametros) {
+		boolean pedidoOk = true;
+		String res = "";
+
+		switch (botao) {
+		case 1:
+			try {
+
+				esteira.setData(hora());
+				res = FachadaWS.getInstancia().ligarEsteira(usuario.getCpf(),
+						esteira);
+
+				esteira.setStatus(1);
+				esteira.setVelocidade(1);				
+				
+				esteira.setCpfu(usuario.getCpf());
+				FachadaBD.criarInstacia(controle.getActivity()).inserirEsteira(esteira);
+				
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			break;
+		case 2:
+			try {
+
+				esteira.setData(hora());
+				res = FachadaWS.getInstancia().desligarEsteira(
+						usuario.getCpf(), esteira);
+
+				esteira.setStatus(0);
+				esteira.setVelocidade(0);
+				
+				esteira.setCpfu(usuario.getCpf());
+				FachadaBD.criarInstacia(controle.getActivity()).inserirEsteira(esteira);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			break;
+		case 3:
+
+			try {
+				if (esteira.getStatus() == 1 && esteira.getVelocidade() <= 30) {
+					esteira.setData(hora());
+					esteira.setStatusVelocidade(1);
+					res = FachadaWS.getInstancia().acaoVelocidade(
+							usuario.getCpf(), esteira);
+
+					esteira.setVelocidade((esteira.getVelocidade()) + 1);
+					
+					esteira.setCpfu(usuario.getCpf());
+					FachadaBD.criarInstacia(controle.getActivity()).inserirEsteira(esteira);
+					
+				}else{
+					res="Esteira em velocidade Maxima!";
+				}
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			break;
+		case 4:
+			try {
+				if (esteira.getStatus() == 1 && esteira.getVelocidade() > 0) {
+					esteira.setData(hora());
+					esteira.setStatusVelocidade(0);
+					res = FachadaWS.getInstancia().acaoVelocidade(
+							usuario.getCpf(), esteira);
+
+					esteira.setVelocidade(esteira.getVelocidade()-1);
+					
+					esteira.setCpfu(usuario.getCpf());
+					FachadaBD.criarInstacia(controle.getActivity()).inserirEsteira(esteira);
+					
+				}else{
+					res="Esteira esta Parada!";
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		case 5:
+			try {
+				if ((esteira.getDirecao() == 0)) {
+					esteira.setData(hora());
+					esteira.setDirecao(1);
+
+					res = FachadaWS.getInstancia().acaoDirecao(
+							usuario.getCpf(), esteira);
+					
+					esteira.setCpfu(usuario.getCpf());
+					FachadaBD.criarInstacia(controle.getActivity()).inserirEsteira(esteira);
+
+				}else{
+					res="Esteira Ja se encontra nessa direcao";
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			break;
+		case 6:
+			try {
+				if (!(esteira.getDirecao() == 0)) {
+					esteira.setData(hora());
+					esteira.setDirecao(0);
+
+					res = FachadaWS.getInstancia().acaoDirecao(
+							usuario.getCpf(), esteira);
+					
+					esteira.setCpfu(usuario.getCpf());
+					FachadaBD.criarInstacia(controle.getActivity()).inserirEsteira(esteira);
+
+				}else{
+					res="Esteira Ja se encontra nessa direcao";
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			break;
+		}
+		return res;
+	}
+
+	@Override
+	public void onPostExecute(String res) {
+		controle.setDisplay(esteira);
+		Toast.makeText(controle.getActivity(), res, Toast.LENGTH_LONG).show();
+	}
+
+	private String hora() {
+		String saida = "";
+		int temp = 0;
+		Calendar data = Calendar.getInstance();
+		saida += "" + data.get(Calendar.DAY_OF_MONTH);
+		temp = data.get(Calendar.MONTH);
+		temp += 1;
+		saida += "_" + temp;
+		saida += "_" + data.get(Calendar.YEAR);
+		saida += "__" + data.get((Calendar.HOUR_OF_DAY))+1;
+		saida += ":" + data.get(Calendar.MINUTE);
+		saida += ":" + data.get(Calendar.SECOND);
+
+		return saida;
+	}
+}

@@ -1,0 +1,46 @@
+package br.edu.ifba.iot.trackedcar;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.TextView;
+
+
+public class CadastrarUsuario extends Activity {
+	private TextView tagTextView;
+	private EditText nomeCarro;
+	private EditText marcaCarro;
+	private EditText anoCarro;
+	private EditText nomeUsuario;
+	private EditText emailUsuario;
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);		
+		setContentView(R.layout.cadastro_activity);
+		
+		Intent intent = getIntent();
+		Bundle b = getIntent().getExtras();
+		
+		if(b!=null){
+		String tag = ""+b.getInt("tag");
+		
+		tagTextView = (TextView) findViewById(R.id.tagID);
+		tagTextView.setText(tag);
+		
+		nomeCarro = (EditText) findViewById(R.id.editTextNome);
+		marcaCarro = (EditText) findViewById(R.id.editTextMarca);
+		anoCarro= (EditText) findViewById(R.id.editTextAno);
+		nomeUsuario = (EditText) findViewById(R.id.editTextNome);
+		emailUsuario = (EditText) findViewById(R.id.editTextE);
+		
+		
+		}
+	}
+	
+	
+	public void cadastrarCliente(){
+		
+	}
+}

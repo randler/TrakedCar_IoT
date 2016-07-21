@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import net.sf.json.JSON;
 import br.edu.ifba.embarcados.webcoisas.bean.Carro;
 import br.edu.ifba.embarcados.webcoisas.bean.Usuario;
 import br.edu.ifba.embarcados.webcoisas.dao.CarroDAO;
@@ -25,20 +26,6 @@ import com.google.gson.Gson;
 @Path("servico")
 public class Servico {
 
-//	@GET
-//	@Path("/id/")
-//	@Produces(MediaType.TEXT_PLAIN)
-//	public String getId() {
-//		return LeitorSensoriamento.getRFID() + "";
-//	}
-
-//	@GET
-//	@Path("/sensores")
-//	@Produces(MediaType.TEXT_PLAIN)
-//	public String getSensores() {
-//		return LeitorSensoriamento.getSensores() + "";
-//	}
-
 	@GET
 	@Path("/consultar/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -48,22 +35,45 @@ public class Servico {
 		return new Gson().toJson(carroDAO.concultarCarro(con,id));
 	}
 
-	@POST
-    @Consumes(MediaType.APPLICATION_JSON)
+	@GET
+	@Path("/consultarRoubo/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String pesquisarRouboCarro(@PathParam("id") int id) throws SQLException {
+		Connection con = ConnectionFactory.getConnection();
+		CarroDAO carroDAO = CarroDAO.getInstancia();
+		UsuarioDAO usuarioDAO = UsuarioDAO.getInstancia();
+		
+		int usuarioId = carroDAO.concultarCarroRoubado(con,id);
+		
+		return new Gson().toJson(usuarioDAO.pesquisarUsuario(usuarioId, con));
+	}
+	
+	@GET
     @Produces(MediaType.APPLICATION_JSON)
-	@Path("/adicionar")
-	public Response adicionarCarro(int idUsuario, String nomeUsuario,
-			String emailUsuario,
-			int idCarro,
-			String nomeCarro,
-			String marcaCarro,
-			String anoCarro,
-			int Usuario_idUsuario)
+	@Path("/adicionar/"
+			+ "{idUsuario}/"
+			+ "{nomeUsuario}/"
+			+ "{emailUsuario}/"
+			+ "{idCarro}/"
+			+ "{nomeCarro}/"
+			+ "{marcaCarro}/"
+			+ "{anoCarro}/"
+			+ "{idUsuarioCarro}/")
+	public boolean adicionarCarro(
+			@PathParam("idUsuario") int idUsuario, 
+			@PathParam("nomeUsuario") String nomeUsuario,
+			@PathParam("emailUsuario") String emailUsuario,
+			@PathParam("idCarro") int idCarro,
+			@PathParam("nomeCarro") String nomeCarro,
+			@PathParam("marcaCarro") String marcaCarro,
+			@PathParam("anoCarro") String anoCarro,
+			@PathParam("idUsuarioCarro") int Usuario_idUsuario)
 			throws SQLException, InstantiationException,
 			IllegalAccessException, ClassNotFoundException {
 
-		Carro carro = new Carro(idCarro, nomeCarro, marcaCarro, anoCarro,
-				Usuario_idUsuario);
+		boolean saida = false;
+		
+		Carro carro = new Carro(idCarro, nomeCarro, marcaCarro, anoCarro, Usuario_idUsuario);
 		Usuario usuario = new Usuario(idUsuario, nomeUsuario, emailUsuario);
 
 		Connection con = ConnectionFactory.getConnection();
@@ -80,11 +90,37 @@ public class Servico {
 
 		try {
 			carroDAO.adicionarCarro(usuario.getId(), carro, con);
+			saida  = true;
 		} catch (SQLException e) {
 			System.out.println("ERRO ao tentar inserir o Carro: " + nomeCarro);
 			e.printStackTrace();
 		}
 		con.close();
-		return Response.status(Status.OK).build();
+		
+		
+		return saida;
 	}
+	
+	
+	@GET
+    @Produces(MediaType.APPLICATION_JSON)
+	@Path("/notificarRoubo/{idCarro}/")
+	public boolean notificarCarroFurtado(@PathParam("idCarro") int idCarro)
+			throws SQLException, InstantiationException,
+			IllegalAccessException, ClassNotFoundException {
+
+		boolean saida = false;
+		Connection con = ConnectionFactory.getConnection();
+		CarroDAO carroDAO = CarroDAO.getInstancia();
+
+		try{
+		carroDAO.alterarStatus(idCarro, true, con);
+		saida = true;
+		}catch(Exception e){
+			
+		}
+		
+		return saida;
+	}
+	
 }

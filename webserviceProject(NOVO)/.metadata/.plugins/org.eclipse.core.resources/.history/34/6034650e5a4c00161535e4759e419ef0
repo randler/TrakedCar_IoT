@@ -1,0 +1,103 @@
+package br.edu.ifba.mobile.andro.esteira.fragmentos;
+
+
+import java.util.List;
+
+import android.annotation.TargetApi;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.internal.widget.AdapterViewCompat;
+import android.support.v7.internal.widget.AdapterViewCompat.OnItemClickListener;
+import android.util.SparseBooleanArray;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import br.edu.ifba.mobile.andro.esteira.R;
+import br.edu.ifba.mobile.andro.esteira.bean.Esteira;
+import br.edu.ifba.mobile.andro.esteira.fachadas.FachadaBD;
+import br.edu.ifba.mobile.andro.esteira.tasks.SincronizadorEsteira;
+
+
+@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+public class FragmentoEsteira extends Fragment implements OnItemClickListener {
+	private static final int SEC_NUMBER = 1;
+
+	private static final String ARG_SECTION_NUMBER = "section_number";
+	private static FragmentoEsteira fragmento;
+
+	public static FragmentoEsteira getInstancia() {
+		if (fragmento == null) {
+			fragmento = new FragmentoEsteira();
+			Bundle args = new Bundle();
+			args.putInt(ARG_SECTION_NUMBER, SEC_NUMBER);
+			fragmento.setArguments(args);
+		}
+
+		return fragmento;
+	}
+
+	ListView listaEsteiras = null;
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View rootView = inflater.inflate(R.layout.fragment_esteiras, container,
+				false);
+
+		listaEsteiras = (ListView) rootView.findViewById(R.id.listaEsteiras);
+		listaEsteiras.setClickable(true);
+		listaEsteiras.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+		fragmento.refreshEsteiras();
+
+		return rootView;
+	}
+
+	// Metodo para checar qual foi escolhido
+	@Override
+	public void onItemClick(AdapterViewCompat<?> parent, View view,
+			final int position, long id) {
+			
+
+	}
+
+	public void refreshEsteiras(List<Esteira> esteiras) {
+
+		if ((esteiras != null) && (!esteiras.isEmpty())) {
+			ArrayAdapter<Esteira> adaptador = new ArrayAdapter<Esteira>(
+					this.getActivity(), android.R.layout.simple_list_item_single_choice,
+					esteiras);
+			listaEsteiras.setAdapter(adaptador);
+
+
+		}
+	}
+
+	public void refreshEsteiras() {
+		SincronizadorEsteira sincronizador = new SincronizadorEsteira(this);
+		sincronizador.execute();
+	}
+	
+	public Esteira getEsteira() {
+		Esteira esteira = new Esteira();
+
+		SparseBooleanArray selecionados = listaEsteiras.getCheckedItemPositions();
+		for (int i = 0; i < listaEsteiras.getCount(); i++) {
+			if (selecionados.get(i)) { 
+				esteira = (Esteira)listaEsteiras.getItemAtPosition(i);
+			}
+		}
+		return esteira;
+	}
+	
+//	public void realizarControle(int cpf) {
+//		ExecutorComandoEsteira executor = new ExecutorComandoEsteira(cpf, FragmentoEsteira.this);
+//		executor.execute();
+//	}
+
+	
+
+}

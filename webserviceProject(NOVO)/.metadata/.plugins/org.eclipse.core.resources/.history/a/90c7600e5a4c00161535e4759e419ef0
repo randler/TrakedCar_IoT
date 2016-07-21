@@ -1,0 +1,84 @@
+package br.edu.ifba.mobile.andro.esteira.esteira.wellcome;
+
+import java.util.List;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.database.SQLException;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+import br.edu.ifba.mobile.andro.esteira.EsteiraActivity;
+import br.edu.ifba.mobile.andro.esteira.R;
+import br.edu.ifba.mobile.andro.esteira.bean.Usuario;
+import br.edu.ifba.mobile.andro.esteira.fachadas.FachadaBD;
+
+
+public class CadastroActivity extends Activity {
+	
+	private TextView nome;
+	private TextView cpf;
+	private Button cad;
+	private  Button cancelar;
+	
+
+	
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.fragment_cadastro);
+		
+		nome = (TextView) findViewById(R.id.editTextName);
+		cpf = (TextView) findViewById(R.id.editTextCPF);
+		cad = (Button) findViewById(R.id.buttonCad);
+		cancelar = (Button) findViewById(R.id.buttonCancelar);
+		
+		
+		cad.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				Usuario usuario = new Usuario();
+				usuario.setCpf(Integer.parseInt(cpf.getText().toString()));
+				usuario.setNome(nome.getText().toString());
+				
+				String usuarioinformado = nome.getText().toString();
+				int senhainformada = Integer.parseInt(cpf.getText().toString());
+				List<Usuario> user = FachadaBD.criarInstacia(CadastroActivity.this).getInstancia().getUsuario();
+				boolean log=false;
+				for (int i = 0; i < user.size(); i++) {
+					if ((user.get(i).getNome().equals(usuarioinformado))
+							&& (user.get(i).getCpf() == senhainformada)) {
+						log=true;
+					}				
+				}
+				if(!log){
+				FachadaBD.getInstancia().inserirUsuario(usuario);
+				Intent intent = new Intent(CadastroActivity.this, LoginActivity.class);
+				startActivity(intent);
+				}else{
+					Toast.makeText(CadastroActivity.this, "Usuario ja cadastrado!", Toast.LENGTH_SHORT).show();
+				}
+				
+			}
+		});
+		cancelar.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(CadastroActivity.this, LoginActivity.class);
+				startActivity(intent);
+
+				
+			}
+		});
+		
+		
+	
+	}
+}

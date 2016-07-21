@@ -1,0 +1,16 @@
+package br.edu.ifba.embarcados.clientewebcoisas.bean;
+
+public class UserEmail {
+	private final String USER_NAME = "iotTrackedcar@gmail.com";
+	private final String USER_PASSWORD= "iotsenhaemail";
+	
+	public String getUSER_NAME() {
+		return USER_NAME;
+	}
+	public String getUSER_PASSWORD() {
+		return USER_PASSWORD;
+	}
+	
+
+	
+}

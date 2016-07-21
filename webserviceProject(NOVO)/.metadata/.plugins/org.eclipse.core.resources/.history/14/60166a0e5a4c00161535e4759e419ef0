@@ -1,0 +1,151 @@
+package br.edu.ifba.mobile.andro.esteira.esteira;
+
+import android.annotation.TargetApi;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.appcompat.R;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
+import br.edu.ifba.mobile.andro.esteira.esteira.bean.Esteira;
+import br.edu.ifba.mobile.andro.esteira.esteira.bean.Historico;
+import br.edu.ifba.mobile.andro.esteira.esteira.bean.Usuario;
+import br.edu.ifba.mobile.andro.esteira.esteira.fachadas.FachadaBD;
+import br.edu.ifba.mobile.andro.esteira.esteira.fachadas.FachadaWS;
+import br.edu.ifba.mobile.andro.esteira.esteira.fragmentos.FragmentoConfig;
+import br.edu.ifba.mobile.andro.esteira.esteira.fragmentos.FragmentoControl;
+import br.edu.ifba.mobile.andro.esteira.esteira.fragmentos.FragmentoEsteira;
+import br.edu.ifba.mobile.andro.esteira.esteira.fragmentos.FragmentoHistorico;
+
+@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+@SuppressWarnings("deprecation")
+public class EsteiraActivity extends ActionBarActivity implements
+		NavigationDrawerFragment.NavigationDrawerCallbacks {
+
+	private static Usuario usuario = new Usuario();
+	private NavigationDrawerFragment navegador;
+	private CharSequence mTitle;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+
+		navegador = (NavigationDrawerFragment) getSupportFragmentManager()
+				.findFragmentById(R.id.navigation_drawer);
+		mTitle = getTitle();
+
+		navegador.setUp(R.id.navigation_drawer,
+				(DrawerLayout) findViewById(R.id.drawer_layout));
+
+		FachadaBD.criarInstacia(getApplicationContext());
+		FachadaWS.getInstancia();
+
+	}
+
+	@Override
+	public void onNavigationDrawerItemSelected(int position) {
+		Fragment fragmento = null;
+		FragmentManager fragmentManager = getSupportFragmentManager();
+
+		if (position == 0) {
+			fragmento = FragmentoEsteira.getInstancia();
+		} else if (position == 1) {
+			fragmento = FragmentoHistorico.getInstancia();
+		} else if (position == 2) {
+			fragmento = FragmentoConfig.getInstancia();
+		}
+
+		fragmentManager.beginTransaction().replace(R.id.container, fragmento)
+				.commit();
+
+	}
+
+	public void onSectionAttached(int number) {
+		switch (number) {
+		case 1:
+			mTitle = getString(R.string.title_section1);
+			break;
+		case 2:
+			mTitle = getString(R.string.title_section2);
+			break;
+		case 3:
+			mTitle = getString(R.string.title_section3);
+			break;
+		}
+	}
+
+	public void restoreActionBar() {
+		ActionBar actionBar = getSupportActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+		actionBar.setDisplayShowTitleEnabled(true);
+		actionBar.setTitle(mTitle);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		if (!navegador.isDrawerOpen()) {
+			getMenuInflater().inflate(R.menu.menu_up, menu);
+			restoreActionBar();
+			return true;
+		}
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == R.id.control) {
+
+			Esteira est = FragmentoEsteira.getInstancia().getEsteira();
+
+			if ((est == null)) {
+				Toast.makeText(this, "Escolha uma esteira", Toast.LENGTH_SHORT)
+						.show();
+			} else {
+				Toast.makeText(this, "Controle Carregado", Toast.LENGTH_SHORT)
+						.show();
+
+				Fragment fragmento = null;
+				FragmentManager fragmentManager = getSupportFragmentManager();
+
+				fragmento = FragmentoControl.getInstancia().setContexto(
+						usuario, est);
+				fragmentManager.beginTransaction()
+						.replace(R.id.container, fragmento).commit();
+			}
+			return true;
+		} else if (item.getItemId() == R.id.delete) {
+
+			Historico hist = FragmentoHistorico.getInstancia().getHistorico();
+
+			if ((hist.getIdhist() == 0)) {
+				Toast.makeText(this, "Escolha um Historico", Toast.LENGTH_SHORT)
+						.show();
+			} else {
+				Toast.makeText(this, "Apagando", Toast.LENGTH_SHORT).show();
+
+				Fragment fragmento = null;
+				FragmentManager fragmentManager = getSupportFragmentManager();
+
+				fragmento = FragmentoHistorico.getInstancia().apagar(usuario,
+						hist);
+				fragmentManager.beginTransaction()
+						.replace(R.id.container, fragmento).commit();
+			}
+
+			return true;
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+
+	public static void setUser(Usuario user) {
+		usuario = user;
+	}
+
+}

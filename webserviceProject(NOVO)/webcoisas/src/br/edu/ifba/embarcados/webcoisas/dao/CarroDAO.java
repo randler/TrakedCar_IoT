@@ -52,14 +52,14 @@ public class CarroDAO {
 		
 	}
 	
-	public void alterarStatus(Usuario usuario, Carro carro, Connection con){
+	public void alterarStatus(int id, boolean status, Connection con){
 		String sql = "update Carro set statusCarro=? "+"where idCarro=?";
 		
         try {
     		PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
 
-        	stmt.setBoolean(1,true);
-			stmt.setInt(2, carro.getId());
+        	stmt.setBoolean(1,status);
+			stmt.setInt(2, id);
 			stmt.execute();
 			stmt.close();
 			
@@ -73,6 +73,7 @@ public class CarroDAO {
 	
 	
 	public static boolean concultarCarro(Connection con, int id){
+		
 		boolean saida = false;
 		Carro carro = new Carro();
 		
@@ -92,9 +93,7 @@ public class CarroDAO {
 				carro.setMarca(rs.getString("marcaCarro"));
 				carro.setAno(rs.getString("anoCarro"));
 				carro.setUsuarioCarro(rs.getInt("Usuario_idUsuario"));
-				
-								
-				
+						
 			}
 			
 		
@@ -102,11 +101,37 @@ public class CarroDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(carro.isStatus())
+		if(!carro.isStatus())
 			saida = true;
-			
 			
 		return saida;
 	}
+	
+	
+	public static int concultarCarroRoubado(Connection con, int id){
+		Carro carro = new Carro();
+		
+		try {
+			PreparedStatement stmt = (PreparedStatement) con.prepareStatement("select * from Carro where idCarro = ?");
+			stmt.setInt(1, id);
+			ResultSet rs = stmt.executeQuery();
+						
+			while(rs.next()){				
+				carro.setId(rs.getInt("idCarro"));
+				carro.setNome(rs.getString("nomeCarro"));
+				carro.setStatus(rs.getBoolean("statusCarro"));
+				carro.setMarca(rs.getString("marcaCarro"));
+				carro.setAno(rs.getString("anoCarro"));
+				carro.setUsuarioCarro(rs.getInt("Usuario_idUsuario"));
+			}		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
+			
+		return carro.getUsuarioCarro();
+	}
+	
 
 }

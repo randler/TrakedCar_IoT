@@ -1,0 +1,92 @@
+package br.edu.ifba.iot.trackedcar.conector;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import br.edu.ifba.iot.trackedcar.bean.Carro;
+import br.edu.ifba.iot.trackedcar.bean.Usuario;
+
+@SuppressWarnings("deprecation")
+public class Conector {
+
+	private static final String ENDERECO_WS = "http://192.168.0.45:8080/webcoisas/v1/servico/";
+	private String acessar(String urlFuncao){
+		String resultado = "";		
+		
+		@SuppressWarnings("resource")
+		HttpClient cliente = new DefaultHttpClient();
+		HttpGet get = new HttpGet(ENDERECO_WS + urlFuncao);
+		HttpResponse resposta;
+		
+		
+		try {
+			resposta = cliente.execute(get);
+			BufferedReader br = new BufferedReader(new InputStreamReader(resposta.getEntity().getContent()));
+
+			resultado = br.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return resultado;
+		
+		
+	}
+	
+		
+	public Integer getId() {
+		Integer id = -1;
+
+		String sid = acessar("id");
+		if (sid != "") {
+			id = Integer.parseInt(sid);
+		}
+
+		return id;
+	}
+
+	public boolean notificarRoubo(int id) {
+		boolean saida = false;
+		String sid = acessar("notificarRoubo/"+id);
+		
+		if(sid != ""){
+			if(sid == "true")
+				saida = true;
+		}
+		
+		return saida;
+	}
+	
+	public boolean adicionar(Usuario user, Carro car) {
+		boolean saida = false;
+		String user_id = acessar("adicionar/"
+		+ user.getId() + "/"
+		+ user.getNome() + "/"
+		+ user.getEmail() + "/"
+		+ car.getId() + "/"
+		+ car.getNome() + "/"
+		+ car.getMarca() + "/"
+		+ car.getAno() + "/"
+		+ user.getId());
+//		Usuario user = new Usuario();
+//		
+//		Gson gson = new GsonBuilder().create();
+//		user = gson.fromJson(user_id, Usuario.class); 
+		if(user_id != ""){
+			if(user_id == "true")
+				saida = true;
+		}
+		
+		return saida;
+	}
+	
+
+	
+	
+}

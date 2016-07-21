@@ -1,0 +1,265 @@
+package br.edu.ifba.mobile.andro.esteira.fachadas;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import br.edu.ifba.mobile.andro.esteira.bean.Esteira;
+import br.edu.ifba.mobile.andro.esteira.bean.Historico;
+import br.edu.ifba.mobile.andro.esteira.bean.Usuario;
+
+public class FachadaBD extends SQLiteOpenHelper {
+
+	private static FachadaBD instancia = null;
+
+	public static FachadaBD criarInstacia(Context contexto) {
+		if (instancia == null) {
+			instancia = new FachadaBD(contexto);
+		}
+
+		return instancia;
+	}
+
+	public static FachadaBD getInstancia() {
+
+		return instancia;
+	}
+
+	private static final String NOME_BANCO = "appesteiraV1beta";
+	private static final int VERSAO = 1;
+
+	private FachadaBD(Context contexto) {
+		super(contexto, NOME_BANCO, null, VERSAO);
+	}
+	
+
+	private static final String CREATE_TABLE_ESTEIRA = "CREATE TABLE IF NOT EXISTS ESTEIRA("
+			+ "ID_HIST INTEGER PRIMARY KEY AUTOINCREMENT,"
+			+ "ID INTEGER, " 
+			+ "NOME TEXT, "
+			+ "VELOCIDADE INTEGER, " 
+			+ "STATUS INTEGER, " 
+			+ "DIRECAO INTEGER,"
+			+ "DATA TEXT,"
+			+ "CPF_U INTEGER,"
+			+ "FOREIGN KEY (CPF_U) REFERENCES USUARIO(CPF))";
+
+	private static final String CREATE_TABLE_HISTORICO = "CREATE TABLE IF NOT EXISTS HISTORICO("
+			+ "CPF_U INTEGER , "
+			+ "ID_E INTEGER ,"
+			+ "DATA TEXT  PRIMARY KEY) ";
+
+	private static final String CREATE_TABLE_USUARIO = "CREATE TABLE IF NOT EXISTS USUARIO("
+			+ "CPF INTEGER PRIMARY KEY, " 
+			+ "NOME TEXT) ";
+
+	
+	
+	private static final String SELECT_TABLE_ESTEIRA = "SELECT ID_HIST, ID, NOME, VELOCIDADE, "
+			+ "STATUS, DIRECAO, DATA, CPF_U FROM ESTEIRA";
+
+	private static final String SELECT_TABLE_USUARIO = "SELECT CPF, NOME "
+			+ "FROM USUARIO";
+
+	private static final String SELECT_TABLE_HISTORICO = "SELECT ID_HIST, ID, NOME, VELOCIDADE, "
+			+ "STATUS, DIRECAO, DATA, CPF_U FROM ESTEIRA";
+
+	@Override
+	public void onCreate(SQLiteDatabase db) {
+		
+		db.execSQL(CREATE_TABLE_USUARIO);
+		db.execSQL(CREATE_TABLE_ESTEIRA);
+		db.execSQL(CREATE_TABLE_HISTORICO);
+	}
+
+	@Override
+	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+	}
+
+	// READ/SELECT Retorna todas as esteiras
+	public List<Esteira> getEsteira() {
+		List<Esteira> esteiras = new ArrayList<Esteira>();
+
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery(SELECT_TABLE_ESTEIRA, null);
+		if (cursor != null) {
+			boolean verificarInstancias = cursor.moveToFirst();
+			while (verificarInstancias) {
+				Esteira esteira = new Esteira();
+				esteira.setIdhist(cursor.getInt(cursor.getColumnIndex("ID_HIST")));
+				esteira.setId(cursor.getInt(cursor.getColumnIndex("ID")));
+				esteira.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
+				esteira.setVelocidade(cursor.getInt(cursor
+						.getColumnIndex("VELOCIDADE")));
+				esteira.setStatus(cursor.getInt(cursor.getColumnIndex("STATUS")));
+				esteira.setDirecao(cursor.getInt(cursor
+						.getColumnIndex("DIRECAO")));
+				esteira.setData(cursor.getString(cursor.getColumnIndex("DATA")));
+				esteira.setCpfu(cursor.getInt(cursor.getColumnIndex("CPF_U")));
+
+				esteiras.add(esteira);
+
+				verificarInstancias = cursor.moveToNext();
+			}
+		}
+
+		return esteiras;
+	}
+	
+	// READ/SELECT Retorna todas as esteiras
+		public List<Historico> getHistorico() {
+			List<Historico> esteiras = new ArrayList<Historico>();
+
+			SQLiteDatabase db = this.getReadableDatabase();
+			Cursor cursor = db.rawQuery(SELECT_TABLE_ESTEIRA, null);
+			if (cursor != null) {
+				boolean verificarInstancias = cursor.moveToFirst();
+				while (verificarInstancias) {
+					Historico historico = new Historico();
+					historico.setIdhist(cursor.getInt(cursor.getColumnIndex("ID_HIST")));
+					historico.setId(cursor.getInt(cursor.getColumnIndex("ID")));
+					historico.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
+					historico.setVelocidade(cursor.getInt(cursor
+							.getColumnIndex("VELOCIDADE")));
+					historico.setStatus(cursor.getInt(cursor.getColumnIndex("STATUS")));
+					historico.setDirecao(cursor.getInt(cursor
+							.getColumnIndex("DIRECAO")));
+					historico.setData(cursor.getString(cursor.getColumnIndex("DATA")));
+					historico.setCpfu(cursor.getInt(cursor.getColumnIndex("CPF_U")));
+
+					esteiras.add(historico);
+
+					verificarInstancias = cursor.moveToNext();
+				}
+			}
+
+			return esteiras;
+		}
+
+	// retornar todos os usuarios
+	public List<Usuario> getUsuario() {
+		List<Usuario> user = new ArrayList<Usuario>();
+
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery(SELECT_TABLE_USUARIO, null);
+		if (cursor != null) {
+			boolean verificarInstancias = cursor.moveToFirst();
+			while (verificarInstancias) {
+				Usuario usuario = new Usuario();
+				usuario.setCpf(cursor.getInt(cursor.getColumnIndex("CPF")));
+				usuario.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
+
+				user.add(usuario);
+
+				verificarInstancias = cursor.moveToNext();
+			}
+		}
+
+		return user;
+	}
+	
+	// inserir Esteiras
+	public long inserirEsteira(Esteira esteira) {
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		ContentValues valores = new ContentValues();
+
+		valores.put("ID", esteira.getId());
+		valores.put("NOME", esteira.getNome());
+		valores.put("VELOCIDADE", esteira.getVelocidade());
+		valores.put("STATUS", esteira.getStatus());
+		valores.put("DIRECAO", esteira.getDirecao());
+		valores.put("DATA", esteira.getData());
+		valores.put("CPF_U", esteira.getCpfu());
+
+		return db.insert("ESTEIRA", null, valores);
+	}
+//	// inserir Historico
+
+	// inserir Esteiras
+		public long inserirHistorico(Historico historico) {
+			SQLiteDatabase db = this.getWritableDatabase();
+
+			ContentValues valores = new ContentValues();
+
+			valores.put("ID", historico.getId());
+			valores.put("NOME", historico.getNome());
+			valores.put("VELOCIDADE", historico.getVelocidade());
+			valores.put("STATUS", historico.getStatus());
+			valores.put("DIRECAO", historico.getDirecao());
+			valores.put("DATA", historico.getData());
+			valores.put("CPF_U", historico.getCpfu());
+
+			return db.insert("ESTEIRA", null, valores);
+		}
+	
+
+	// inserir usuarios
+	public long inserirUsuario(Usuario usuario) {
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		ContentValues valores = new ContentValues();
+
+		valores.put("CPF", usuario.getCpf());
+		valores.put("NOME", usuario.getNome());
+
+		return db.insert("USUARIO", null, valores);
+	}
+
+//	// Atualizar Esteiras
+//	public long atualizarEsteira(Esteira esteira) {
+//		SQLiteDatabase db = this.getWritableDatabase();
+//
+//		ContentValues valores = new ContentValues();
+//
+//		valores.put("ID", esteira.getId());
+//		valores.put("NOME", esteira.getNome());
+//		valores.put("VELOCIDADE", esteira.getVelocidade());
+//		valores.put("STATUS", esteira.getStatus());
+//		valores.put("DIRECAO", esteira.getDirecao());
+//
+//		return db.update("ESTEIRA", valores, "ID = ?",
+//				new String[] { esteira.getId() + "" });
+//	}
+
+	// Atualiza Usuarios
+	public long atualizarUsuario(Usuario usuario) {
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		ContentValues valores = new ContentValues();
+
+		valores.put("ID", usuario.getCpf());
+		valores.put("NOME", usuario.getNome());
+
+		return db.update("USUARIO", valores, "CPF = ?",
+				new String[] { usuario.getCpf() + "" });
+	}
+
+
+	
+	// DELETE Esteira
+//	public void apagarEsteira(int indice) {
+//		SQLiteDatabase db = this.getWritableDatabase();
+//
+//		db.delete("ESTEIRA", "ID_HIST = ?", new String[] { indice + "" });
+//	}
+
+//	// DELETE usuario
+//	public void apagarUsuario(Usuario usuario) {
+//		SQLiteDatabase db = this.getWritableDatabase();
+//
+//		db.delete("USUARIO", "CPF = ?", new String[] { usuario.getCpf() + "" });
+//	}
+
+	// DELETE Historico
+	public void apagarHistorico(Historico esteira,Usuario usuario) {
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		db.delete("ESTEIRA", "ID_HIST = ?", new String[] { esteira.getIdhist() + "" });
+	}
+}

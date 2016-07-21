@@ -1,0 +1,81 @@
+package br.edu.ifba.mobile.andro.esteira.fragmentos;
+
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+import br.edu.ifba.mobile.andro.esteira.EsteiraActivity;
+import br.edu.ifba.mobile.andro.esteira.R;
+import br.edu.ifba.mobile.andro.esteira.bean.Usuario;
+import br.edu.ifba.mobile.andro.esteira.fachadas.FachadaBD;
+import br.edu.ifba.mobile.andro.esteira.wellcome.CadastroActivity;
+import br.edu.ifba.mobile.andro.esteira.wellcome.LoginActivity;
+
+
+@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+public class FragmentoConfig extends Fragment {
+
+	private static final int SEC_NUMBER = 1;
+
+	private static final String ARG_SECTION_NUMBER = "section_number";
+	private static FragmentoConfig fragmento;
+	private TextView nome = null;	
+	private Button editar = null;
+	private TextView cpf = null;
+
+
+	public static FragmentoConfig getInstancia() {
+		if (fragmento == null) {
+			fragmento = new FragmentoConfig();
+			Bundle args = new Bundle();
+			args.putInt(ARG_SECTION_NUMBER, SEC_NUMBER);
+			fragmento.setArguments(args);
+			
+	}
+
+		return fragmento;
+	}
+	
+
+	
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View rootView = inflater.inflate(R.layout.fragment_editar_cadastro, container,
+				false);
+		nome = (TextView) rootView.findViewById(R.id.textViewNameMudar);
+		cpf = (TextView) rootView.findViewById(R.id.textViewCPFMudar);
+		editar = (Button) rootView.findViewById(R.id.buttonEdit);
+		
+		
+		editar.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Toast.makeText(fragmento.getActivity(), R.string.Compre,
+						Toast.LENGTH_LONG).show();
+			}
+		});
+
+
+		return rootView;
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		((EsteiraActivity) activity).onSectionAttached(getArguments().getInt(
+				ARG_SECTION_NUMBER));
+	}
+
+}

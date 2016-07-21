@@ -103,3 +103,8 @@
 127.0.0.1 - - [15/Jul/2016:17:21:24 -0300] "GET /webcoisas/v1/servico/consultar/805340837 HTTP/1.1" 200 14
 127.0.0.1 - - [15/Jul/2016:17:21:25 -0300] "GET /webcoisas/v1/servico/consultar/805340837 HTTP/1.1" 200 14
 127.0.0.1 - - [15/Jul/2016:17:21:27 -0300] "GET /webcoisas/v1/servico/consultar/805340837 HTTP/1.1" 200 14
+127.0.0.1 - - [15/Jul/2016:17:23:46 -0300] "GET /webcoisas/v1/servico/consultar/0 HTTP/1.1" 200 15
+127.0.0.1 - - [15/Jul/2016:17:24:02 -0300] "GET /webcoisas/v1/servico/consultar/221216820 HTTP/1.1" 200 15
+127.0.0.1 - - [15/Jul/2016:17:24:04 -0300] "GET /webcoisas/v1/servico/consultar/221216820 HTTP/1.1" 200 15
+127.0.0.1 - - [15/Jul/2016:17:24:05 -0300] "GET /webcoisas/v1/servico/consultar/221216820 HTTP/1.1" 200 15
+127.0.0.1 - - [15/Jul/2016:17:24:10 -0300] "GET /webcoisas/v1/servico/consultar/805340837 HTTP/1.1" 200 14

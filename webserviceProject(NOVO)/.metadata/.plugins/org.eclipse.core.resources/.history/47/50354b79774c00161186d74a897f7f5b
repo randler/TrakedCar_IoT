@@ -1,0 +1,158 @@
+package br.edu.ifba.embarcados.webcoisas.dao;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import br.edu.ifba.embarcados.webcoisas.bean.Carro;
+import br.edu.ifba.embarcados.webcoisas.bean.Usuario;
+
+import com.mysql.cj.jdbc.PreparedStatement;
+
+public class CarroDAO {
+	
+	private static CarroDAO carro = null;
+	
+	private CarroDAO(){
+		
+	}
+	
+	public static CarroDAO getInstancia(){
+		if(carro == null){
+			carro = new CarroDAO();
+		}
+		return carro;
+	}
+	
+	private static List<Carro> carros = new ArrayList<Carro>();
+	
+	public void adicionarCarro(int usuarioId, Carro carro, Connection con) throws SQLException{
+		 // cria um preparedStatement
+       String sql = "insert into Carro" +
+               " (idCarro,nomeCarro,statusCarro, marcaCarro, anoCarro,Usuario_idUsuario)" +
+               " values (?,?,?,?,?,?)";
+       PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
+       
+       
+       // preenche os valores
+       stmt.setInt(1, carro.getId());
+       stmt.setString(2, carro.getNome());
+       stmt.setBoolean(3, false);
+       stmt.setString(4, carro.getMarca());
+       stmt.setString(5, carro.getAno());
+       stmt.setInt(6,usuarioId);
+
+       // executa
+       stmt.execute();
+       stmt.close();
+
+       System.out.println("Gravado!");
+		
+	}
+	
+	public void alterarStatus(String email, boolean status, Connection con){
+		
+		
+		int idUsuario = 0;		
+		
+		try {
+		PreparedStatement stmt1 = (PreparedStatement) con.prepareStatement("select * from Usuario where emailUsuario = ?");
+		stmt1.setString(1, email);
+		ResultSet rs1 = stmt1.executeQuery();
+		
+		System.out.println(idUsuario);
+		while(rs1.next()){			
+				idUsuario = rs1.getInt("idUsuario");
+			} 
+		}catch (SQLException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Errou");
+			
+			}
+		
+		String sql = "update Carro set statusCarro=? "+"where idCarro=?";
+		
+        try {
+    		PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
+
+        	stmt.setBoolean(1,status);
+			stmt.setInt(2, idUsuario);
+			stmt.execute();
+			stmt.close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	
+	public static boolean concultarCarro(Connection con, int id){
+		boolean saida = false;
+		Carro carro = new Carro();
+		
+		try {
+			PreparedStatement stmt = (PreparedStatement) con.prepareStatement("select * from Carro where idCarro = ?");
+		
+			stmt.setInt(1, id);
+			ResultSet rs = stmt.executeQuery();
+			
+			
+			while(rs.next()){
+				
+				
+				carro.setId(rs.getInt("idCarro"));
+				carro.setNome(rs.getString("nomeCarro"));
+				carro.setStatus(rs.getBoolean("statusCarro"));
+				carro.setMarca(rs.getString("marcaCarro"));
+				carro.setAno(rs.getString("anoCarro"));
+				carro.setUsuarioCarro(rs.getInt("Usuario_idUsuario"));
+				
+								
+				
+			}
+			
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(carro.isStatus())
+			saida = true;
+			
+			
+		return saida;
+	}
+	
+	
+	public static int concultarCarroRoubado(Connection con, int id){
+		Carro carro = new Carro();
+		
+		try {
+			PreparedStatement stmt = (PreparedStatement) con.prepareStatement("select * from Carro where idCarro = ?");
+			stmt.setInt(1, id);
+			ResultSet rs = stmt.executeQuery();
+						
+			while(rs.next()){				
+				carro.setId(rs.getInt("idCarro"));
+				carro.setNome(rs.getString("nomeCarro"));
+				carro.setStatus(rs.getBoolean("statusCarro"));
+				carro.setMarca(rs.getString("marcaCarro"));
+				carro.setAno(rs.getString("anoCarro"));
+				carro.setUsuarioCarro(rs.getInt("Usuario_idUsuario"));
+			}		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
+			
+		return carro.getUsuarioCarro();
+	}
+	
+
+}

@@ -1,0 +1,169 @@
+package br.edu.ifba.mobile.andro.esteira.fachadas;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import android.util.Log;
+import br.edu.ifba.mobile.andro.esteira.bean.Esteira;
+import br.edu.ifba.mobile.andro.esteira.bean.Usuario;
+
+import com.google.gson.Gson;
+
+@SuppressWarnings("deprecation")
+public class FachadaWS {
+
+	private static final String ENDERECO_SERVICO = "http://10.0.3.2:8080/wservice.esteira/v1";
+
+	// instancia singleton desta fachada
+	private static FachadaWS instancia = null;
+
+	// recupera instancia
+	public static FachadaWS getInstancia() {
+		if (instancia == null) {
+			instancia = new FachadaWS();
+		}
+
+		return instancia;
+	}
+
+	// esconde construtor void: ninguem poderah instanciar esta classe
+	// diretamente
+	private FachadaWS() {
+	}
+
+	public List<Esteira> getEsteiras() throws Exception {
+		// cria lista
+		List<Esteira> ester = new ArrayList<Esteira>();
+		// navega no servico web
+		HttpClient cliente = new DefaultHttpClient();
+
+		Log.i("FachadaWS::getEsteiras", ENDERECO_SERVICO + "/evo/esteiras");
+
+		HttpGet get = new HttpGet(ENDERECO_SERVICO + "/evo/esteiras");
+		// obtem resposta do servico web
+		HttpResponse resposta = cliente.execute(get);
+		// realiza a leitura do json
+		BufferedReader br = new BufferedReader(new InputStreamReader(resposta
+				.getEntity().getContent()));
+		String json = br.readLine();
+		if (json != null) {
+			// converter de json para lista
+			Gson conversor = new Gson();
+
+			Esteira esteiras[] = conversor.fromJson(json,
+					(new Esteira[] {}).getClass());
+
+			for (int i = 0; i < esteiras.length; i++) {
+				ester.add(esteiras[i]);
+			}
+		}
+
+		return ester;
+	}
+
+	public String ligarEsteira(int cpf, Esteira esteira) throws Exception {
+		HttpClient cliente = new DefaultHttpClient();
+
+		Log.i("FachadaWS::ligarEsteira", ENDERECO_SERVICO + "/evo/ligar/" + cpf
+				+ "/" + esteira.getId() + "/" + esteira.getData());
+		
+		HttpGet get = new HttpGet(ENDERECO_SERVICO + "/evo/ligar/" + cpf + "/"
+				+ esteira.getId() + "/" + esteira.getData());
+		// obtem resposta do servico web
+		
+		
+		
+		HttpResponse resposta = cliente.execute(get);
+		// realiza a leitura do retorno
+		BufferedReader br = new BufferedReader(new InputStreamReader(resposta
+				.getEntity().getContent()));
+		String resultado = br.readLine();
+		
+		return resultado;
+	}
+
+	public String desligarEsteira(int cpf, Esteira esteira) throws Exception {
+		HttpClient cliente = new DefaultHttpClient();
+
+		Log.i("FachadaWS::desligarEsteira", ENDERECO_SERVICO + "/evo/desligar/"
+				+ cpf + "/" + esteira.getId() + "/" + esteira.getData());
+
+		HttpGet get = new HttpGet(ENDERECO_SERVICO + "/evo/desligar/" + cpf
+				+ "/" + esteira.getId() + "/" + esteira.getData());
+		// obtem resposta do servico web
+		HttpResponse resposta = cliente.execute(get);
+		// realiza a leitura do retorno
+		BufferedReader br = new BufferedReader(new InputStreamReader(resposta
+				.getEntity().getContent()));
+		String resultado = br.readLine();
+
+		return resultado;
+	}
+
+	public String acaoVelocidade(int cpf, Esteira esteira) throws Exception {
+		HttpClient cliente = new DefaultHttpClient();
+
+		Log.i("FachadaWS::desligarEsteira", ENDERECO_SERVICO
+				+ "/evo/velocidade/" + cpf + "/" + esteira.getId() + "/"
+				+ esteira.getData() + "/" + esteira.getStatusVelocidade());
+
+		HttpGet get = new HttpGet(ENDERECO_SERVICO + "/evo/velocidade/" + cpf
+				+ "/" + esteira.getId() + "/" + esteira.getData() + "/"
+				+ esteira.getStatusVelocidade());
+		// obtem resposta do servico web
+		HttpResponse resposta = cliente.execute(get);
+		// realiza a leitura do retorno
+		BufferedReader br = new BufferedReader(new InputStreamReader(resposta
+				.getEntity().getContent()));
+		String resultado = br.readLine();
+		return resultado;
+
+	}
+
+	public String acaoDirecao(int cpf, Esteira esteira) throws Exception {
+		HttpClient cliente = new DefaultHttpClient();
+
+		Log.i("FachadaWS::desligarEsteira", ENDERECO_SERVICO + "/evo/direcao/"
+				+ cpf + "/" + esteira.getId() + "/" + esteira.getData() + "/"
+				+ esteira.getDirecao());
+
+		HttpGet get = new HttpGet(ENDERECO_SERVICO + "/evo/direcao/" + cpf
+				+ "/" + esteira.getId() + "/" + esteira.getData() + "/"
+				+ esteira.getDirecao());
+		// obtem resposta do servico web
+		HttpResponse resposta = cliente.execute(get);
+		// realiza a leitura do retorno
+		BufferedReader br = new BufferedReader(new InputStreamReader(resposta
+				.getEntity().getContent()));
+		String resultado = br.readLine();
+		return resultado;
+	}
+
+	//
+	// public String cancelarPedido(String telefone, Pedido pedido)
+	// throws Exception {
+	// HttpClient cliente = new DefaultHttpClient();
+	//
+	// Log.i("FachadaWS::realizarPedido", ENDERECO_SERVICO
+	// + "/ws/cancelamento/" + telefone + "/" + pedido.getId());
+	//
+	// HttpDelete delete = new HttpDelete(ENDERECO_SERVICO + "/ws/cancelamento/"
+	// + telefone + "/" + pedido.getId());
+	// // obtem resposta do servico web
+	// HttpResponse resposta = cliente.execute(delete);
+	// // realiza a leitura do retorno
+	// BufferedReader br = new BufferedReader(new InputStreamReader(resposta
+	// .getEntity().getContent()));
+	// String resultado = br.readLine();
+	//
+	// return resultado;
+	// }
+}

@@ -1,0 +1,50 @@
+package br.edu.ifba.mobile.andro.esteira.tasks;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.annotation.TargetApi;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.util.Log;
+import android.widget.Toast;
+import br.edu.ifba.mobile.andro.esteira.bean.Historico;
+import br.edu.ifba.mobile.andro.esteira.fachadas.FachadaBD;
+import br.edu.ifba.mobile.andro.esteira.fragmentos.FragmentoHistorico;
+
+public class SincronizadorHistorico extends AsyncTask<Void, Void, String> {
+
+
+	private List<Historico> historico = new ArrayList<Historico>();
+	private FragmentoHistorico fragmentoHistorico;
+
+	public SincronizadorHistorico(FragmentoHistorico fragmentohistorico) {
+		this.fragmentoHistorico = fragmentohistorico;
+	}
+
+	@Override
+	protected String doInBackground(Void... parametros) {
+		String out = "";
+		try {
+			historico = FachadaBD.criarInstacia(fragmentoHistorico.getActivity()).getHistorico();
+			out = "Historico Atual";
+		} catch (Exception e) {
+			e.printStackTrace();
+			Log.e("Sincronizador::doInBackground", "Erro ao sincronizar!");
+
+			out = "Erro ao sincronizar!";
+		}
+
+		return out;
+	}
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	@Override
+	public void onPostExecute(String resultado) {
+		fragmentoHistorico.atualizarListaHistorico(historico);
+
+		Toast.makeText(fragmentoHistorico.getActivity(), resultado,
+				Toast.LENGTH_LONG).show();
+	}
+
+}
