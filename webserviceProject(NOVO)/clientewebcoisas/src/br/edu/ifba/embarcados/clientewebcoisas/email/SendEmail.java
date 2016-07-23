@@ -5,12 +5,10 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Properties;
-
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageOutputStream;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -21,9 +19,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-
-import org.apache.tomcat.jni.File;
-
 import br.edu.ifba.embarcados.clientewebcoisas.bean.UserEmail;
 import br.edu.ifba.embarcados.clientewebcoisas.bean.Usuario;
 
@@ -90,10 +85,10 @@ public class SendEmail {
         BodyPart messageBodyPart = new MimeBodyPart();
         String htmlText = "<H1>Veículo Identificado</H1>"
         		+ "<strong>Sr. "+usuario.getNome() + "</strong> O seu veículo foi identificado no seguinte"
-        		+ " local:" + local
-        		+ " no dia:" + data
-        		+ " na hora:" + hora
-        		+ "<img src=\"cid:image\">";
+        		+ " local: " + local
+        		+ "- no dia: " + data
+        		+ "- na hora: " + hora
+        		+ "<br /><img src=\"cid:image\">";
         messageBodyPart.setContent(htmlText, "text/html");
         // add it
         multipart.addBodyPart(messageBodyPart);

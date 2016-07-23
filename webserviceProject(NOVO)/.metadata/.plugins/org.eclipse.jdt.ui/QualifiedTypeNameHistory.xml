@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="br.edu.ifba.embarcados.clientewebcoisas.bean.Carro"/>
-<fullyQualifiedTypeName name="br.edu.ifba.embarcados.clientewebcoisas.factory.comandos.Consultar"/>
-<fullyQualifiedTypeName name="com.mysql.cj.jdbc.PreparedStatement"/>
-<fullyQualifiedTypeName name="java.security.Timestamp"/>
 <fullyQualifiedTypeName name="java.sql.Timestamp"/>
 <fullyQualifiedTypeName name="java.lang.UnknownError"/>
 <fullyQualifiedTypeName name="java.lang.Runnable"/>
@@ -14,7 +10,6 @@
 <fullyQualifiedTypeName name="javax.swing.JFrame"/>
 <fullyQualifiedTypeName name="br.edu.ifba.embarcados.clientewebcoisas.webcam.MyWebcam"/>
 <fullyQualifiedTypeName name="br.edu.ifba.embarcados.clientewebcoisas.bean.Senha"/>
-<fullyQualifiedTypeName name="br.edu.ifba.embarcados.clientewebcoisas.email.SendEmail"/>
 <fullyQualifiedTypeName name="java.util.Calendar"/>
 <fullyQualifiedTypeName name="com.sun.mail.handlers.image_gif"/>
 <fullyQualifiedTypeName name="br.edu.ifba.embarcados.webcoisas.dao.CarroDAO"/>
@@ -35,7 +30,6 @@
 <fullyQualifiedTypeName name="javax.activation.FileDataSource"/>
 <fullyQualifiedTypeName name="javax.activation.DataHandler"/>
 <fullyQualifiedTypeName name="javax.mail.BodyPart"/>
-<fullyQualifiedTypeName name="br.edu.ifba.embarcados.clientewebcoisas.bean.UserEmail"/>
 <fullyQualifiedTypeName name="br.edu.ifba.embarcados.webcoisas.dao.UsuarioDAO"/>
 <fullyQualifiedTypeName name="net.sf.json.JSON"/>
 <fullyQualifiedTypeName name="java.util.List"/>
@@ -60,4 +54,10 @@
 <fullyQualifiedTypeName name="android.widget.EditText"/>
 <fullyQualifiedTypeName name="android.R"/>
 <fullyQualifiedTypeName name="jim.h.common.android.zxinglib.R"/>
+<fullyQualifiedTypeName name="br.edu.ifba.embarcados.clientewebcoisas.bean.UserEmail"/>
+<fullyQualifiedTypeName name="java.util.logging.Level"/>
+<fullyQualifiedTypeName name="org.apache.log4j.Logger"/>
+<fullyQualifiedTypeName name="br.edu.ifba.embarcados.clientewebcoisas.email.SendEmail"/>
+<fullyQualifiedTypeName name="javax.imageio.stream.ImageOutputStream"/>
+<fullyQualifiedTypeName name="java.io.File"/>
 </qualifiedTypeNameHistroy>

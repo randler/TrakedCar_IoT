@@ -1,0 +1,114 @@
+package br.edu.ifba.embarcados.webcoisas;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+
+import net.sf.json.JSON;
+import br.edu.ifba.embarcados.webcoisas.bean.Carro;
+import br.edu.ifba.embarcados.webcoisas.bean.Usuario;
+import br.edu.ifba.embarcados.webcoisas.dao.CarroDAO;
+import br.edu.ifba.embarcados.webcoisas.dao.UsuarioDAO;
+import br.edu.ifba.embarcados.webcoisas.factory.ConnectionFactory;
+
+import com.google.gson.Gson;
+
+@Path("servico")
+public class Servico {
+
+	@GET
+	@Path("/consultar/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String pesquisarCarro(@PathParam("id") int id) {
+		Connection con = ConnectionFactory.getConnection();
+		CarroDAO carroDAO = CarroDAO.getInstancia();
+		return new Gson().toJson(carroDAO.concultarCarro(con,id));
+	}
+
+	@GET
+	@Path("/consultarRoubo/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String pesquisarRouboCarro(@PathParam("id") int id) throws SQLException {
+		Connection con = ConnectionFactory.getConnection();
+		CarroDAO carroDAO = CarroDAO.getInstancia();
+		UsuarioDAO usuarioDAO = UsuarioDAO.getInstancia();
+		
+		int usuarioId = carroDAO.concultarCarroRoubado(con,id);
+		
+		return new Gson().toJson(usuarioDAO.pesquisarUsuario(usuarioId, con));
+	}
+	
+	@GET
+    @Produces(MediaType.APPLICATION_JSON)
+	@Path("/adicionar/"
+			+ "{usuario}/"
+			+ "{carro}")
+	public boolean adicionarCarro(
+			@PathParam("usuario") Usuario usuarioI, 
+			@PathParam("carro") Carro carroI)
+			throws SQLException, InstantiationException,
+			IllegalAccessException, ClassNotFoundException {
+
+		boolean saida = false;
+		
+		Carro carro = carroI;
+		Usuario usuario = usuarioI;
+
+		Connection con = ConnectionFactory.getConnection();
+		UsuarioDAO usuarioDAO = UsuarioDAO.getInstancia();
+		CarroDAO carroDAO = CarroDAO.getInstancia();
+
+		try {
+			usuarioDAO.adicionarUsuario(usuario, con);
+		} catch (SQLException e) {
+			System.out.println("ERRO ao tentar inserir o usuario: "
+					+ usuario.getNome());
+			e.printStackTrace();
+		}
+
+		try {
+			carroDAO.adicionarCarro(usuario.getId(), carro, con);
+			saida  = true;
+		} catch (SQLException e) {
+			System.out.println("ERRO ao tentar inserir o Carro: " + nomeCarro);
+			e.printStackTrace();
+		}
+		con.close();
+		
+		
+		return saida;
+	}
+	
+	
+	@GET
+    @Produces(MediaType.APPLICATION_JSON)
+	@Path("/notificarRoubo/{idCarro}/")
+	public boolean notificarCarroFurtado(@PathParam("idCarro") int idCarro)
+			throws SQLException, InstantiationException,
+			IllegalAccessException, ClassNotFoundException {
+
+		boolean saida = false;
+		Connection con = ConnectionFactory.getConnection();
+		CarroDAO carroDAO = CarroDAO.getInstancia();
+
+		try{
+		carroDAO.alterarStatus(idCarro, true, con);
+		saida = true;
+		}catch(Exception e){
+			
+		}
+		
+		return saida;
+	}
+	
+}
