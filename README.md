@@ -27,3 +27,7 @@ consiga obter as últimas informações lidas a partir dos sensores;<br>
 Este cliente deve utilizar o Serviço Web para exibir os valores (dos sensores) lidos e os diagnósticos realizados na forma<br>
 de uma Aplicação.
 
+#Esquemático Arduino
+
+![esqumatico](https://github.com/randler/TrakedCar_IoT/blob/master/Arduino/img/RFidRc522_bb.png)
+
